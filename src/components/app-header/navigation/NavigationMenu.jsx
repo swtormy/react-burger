@@ -1,28 +1,30 @@
 import React from 'react'
-import { Button, BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from '../AppHeader.module.css';
+import { Button, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import NavigationLink from '../link/NavigationLink';
 
-const NavigationMenu = () => {
+const NavigationMenu = ({ board, setBoard }) => {
     const links = [
         {
             name: 'Конструктор',
-            icon: <BurgerIcon type="primary" />
+            icon: <BurgerIcon type={board === 'Конструктор' ? "primary" : "secondary"} />
         },
         {
             name: 'Лента заказов',
-            icon: <BurgerIcon type="primary" />
+            icon: <ListIcon type={board === 'Лента заказов' ? "primary" : "secondary"} />
         }
     ]
     return (
-        <div>
-            {links.map(link => (
-                <Button htmlType="button" type="secondary" size="medium">
-                    <div className={styles.button__inner}>
-                        {link.icon}
-                        <p style={{ marginLeft: '8px' }}>
-                            {link.name}
-                        </p>
-                    </div>
-                </Button>
+        <div className={styles.navbar}>
+            {links.map((link, index) => (
+                <NavigationLink
+                    key={index}
+                    board={board}
+                    setBoard={setBoard}
+                    icon={link.icon}
+                    name={link.name}
+                    style={index > 0 ? { marginLeft: '8px' } : {}}
+                />
             ))}
         </div>
     )

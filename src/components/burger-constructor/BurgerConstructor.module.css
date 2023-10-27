@@ -1,0 +1,91 @@
+.inner_block {}
+
+.inner_ings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    height: fit-content;
+}
+
+.burger {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 100px;
+}
+
+.burger_row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.burger_row>svg {
+    cursor: pointer;
+}
+
+.burger_row_block {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-left: 32px;
+}
+
+.result {
+    margin-top: 40px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: end;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.price {
+    display: flex;
+    gap: 8px;
+}
+
+.currency {
+    display: flex;
+    align-items: center;
+}
+
+.currency svg {
+    width: 36px;
+    height: 36px;
+}
+
+.button {}
+
+
+.order_num {
+    padding-top: 120px;
+}
+
+.idn_tex {
+    padding-top: 32px;
+}
+
+.done_icon {
+    padding-top: 60px;
+}
+
+.done_txt {
+    padding-top: 60px;
+}
+
+.desc_txt {
+    padding-top: 8px;
+    padding-bottom: 120px;
+    color: #8585AD;
+}
+
+.done_form {
+    width: 720px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,78 @@
+.ingridients {
+    overflow-y: auto;
+    height: fit-content;
+}
+
+.title {
+    padding-top: 40px;
+}
+
+.tabs {
+    padding-top: 20px;
+    display: flex;
+}
+
+.item {
+    padding: 60px;
+}
+
+.column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding-top: 24px;
+    padding-bottom: 40px;
+}
+
+.detail_for_center {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.detail_inner {
+    padding: 20px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.detail_desc {
+    
+}
+
+.detail_img {
+    width: 520px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.detail_name {
+    padding-top: 16px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.composition {
+    display: flex;
+    gap: 20px;
+    color: #8585AD;
+    padding-top: 32px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.composition_inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -7,13 +7,13 @@ import BurgerConstructor from './components/burger-constructor/BurgerConstructor
 
 function App() {
   return (
-    <>
-    <AppHeader />
-    <article>
-      <BurgerIngredients />
-      <BurgerConstructor />
-    </article>
-    </>
+    <div style={{ height: "100vh" }}>
+      <AppHeader />
+      <article className="articleContainer">
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </article>
+    </div>
   );
 }
 
