@@ -1,9 +1,14 @@
 import React from 'react'
-import styles from '../AppHeader.module.css';
+import styles from '../app-header.module.css';
 import { Button, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import NavigationLink from '../link/NavigationLink';
+import NavigationLink from '../link/navigation-link';
 
-const NavigationMenu = ({ board, setBoard }) => {
+interface NavigationMenuProps {
+    board: string;
+    setBoard: (name: string) => void;
+}
+
+const NavigationMenu: React.FC<NavigationMenuProps> = ({ board, setBoard }) => {
     const links = [
         {
             name: 'Конструктор',

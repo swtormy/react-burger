@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import styles from './AppHeader.module.css';
+import styles from './app-header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
-import NavigationMenu from './navigation/NavigationMenu'
-import NavigationLink from './link/NavigationLink'
+import NavigationMenu from './navigation/navigation-menu'
+import NavigationLink from './link/navigation-link'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const AppHeader = () => {

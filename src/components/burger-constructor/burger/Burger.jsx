@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from '../BurgerConstructor.module.css'
+import styles from '../burger-constructor.module.css'
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { data } from '../../../utils/data'
 
 const Burger = () => {
     return (
-        <div style={{ height: "591px" }} className={styles.burger}>
+        <div className={styles.burger}>
             <div className={styles.burger_row_block}>
                 <ConstructorElement
                     type="top"
@@ -15,9 +15,9 @@ const Burger = () => {
                     thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
                 />
             </div>
-            <div style={{ height: "" }} className={styles.inner_ings}>
-                {data.slice(1,6).map(ing => (
-                    <div className={styles.burger_row}>
+            <div className={styles.inner_ings}>
+                {data.slice(1,6).map((ing, index) => (
+                    <div key={index} className={styles.burger_row}>
                         <DragIcon type="primary" />
                         <ConstructorElement
                             text={ing.name}

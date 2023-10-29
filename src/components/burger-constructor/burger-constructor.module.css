@@ -1,4 +1,6 @@
-.inner_block {}
+.inner_block {
+    height: 100%;
+}
 
 .inner_ings {
     display: flex;
@@ -8,11 +10,17 @@
     height: fit-content;
 }
 
+.burger_constructor {
+    height: calc(100vh - 168px);
+    width: 100%;
+}
+
 .burger {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding-top: 100px;
+    height: 591px;
 }
 
 .burger_row {
@@ -30,6 +38,10 @@
     gap: 8px;
     align-items: center;
     padding-left: 32px;
+}
+
+.result_block {
+    height: calc(100% - 691px);
 }
 
 .result {
@@ -60,32 +72,3 @@
 .button {}
 
 
-.order_num {
-    padding-top: 120px;
-}
-
-.idn_tex {
-    padding-top: 32px;
-}
-
-.done_icon {
-    padding-top: 60px;
-}
-
-.done_txt {
-    padding-top: 60px;
-}
-
-.desc_txt {
-    padding-top: 8px;
-    padding-bottom: 120px;
-    color: #8585AD;
-}
-
-.done_form {
-    width: 720px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}

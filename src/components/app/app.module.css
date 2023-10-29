@@ -53,3 +53,7 @@
   margin: 0 auto;
   flex-grow: 1;
 }
+
+.main {
+  height: 100vh;
+}

@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
-import styles from './BurgerIngredients.module.css';
+import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { data } from '../../utils/data'
-import IngridientCard from './ingridient-card/IngridientCard';
-import Overlay from '../modal/Overlay';
-import Modal from '../modal/Modal';
+import IngridientCard from './ingridient-card/ingridient-card';
+import Overlay from '../modal/overlay';
+import Modal from '../modal/modal';
+import IngredientDetails from '../modal/modal-children/ingredient-details'
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('one');
@@ -72,9 +73,9 @@ const BurgerIngredients = () => {
 
 
   return (
-    <div style={{ height: "calc(100vh - 168px)", width: "100%" }}>
-      <div style={{ height: "100%" }}>
-        <div style={{ height: "196px" }}>
+    <div className={styles.ingridients_block}>
+      <div className={styles.ingridients_inner_block}>
+        <div className={styles.title_block}>
           <p className={[styles.title, "text text_type_main-large"].join(" ")}>
             Соберите бургер
           </p>
@@ -84,86 +85,36 @@ const BurgerIngredients = () => {
             <Tab value="three" active={current === 'three'} onClick={() => handleTabClick('three')}>Начинки</Tab>
           </div>
         </div>
-        <div style={{ height: "calc(100% - 196px)" }} className={styles.ingridients}>
+        <div className={styles.ingridients}>
           <p ref={bunsRef} className="text text_type_main-medium">
             Булки
           </p>
           <div className={styles.column}>
-            {buns.map(item => (
-              <IngridientCard item={item} onOpen={() => handleOrderClick(item)} />
+            {buns.map((item, index) => (
+              <IngridientCard key={index} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
           <p ref={saucesRef} className="text text_type_main-medium">
             Соусы
           </p>
           <div className={styles.column}>
-            {sauces.map(item => (
-              <IngridientCard item={item} onOpen={() => handleOrderClick(item)} />
+            {sauces.map((item, index) => (
+              <IngridientCard key={index} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
           <p ref={fillingsRef} className="text text_type_main-medium">
             Начинки
           </p>
           <div className={styles.column}>
-            {fillings.map(item => (
-              <IngridientCard item={item} onOpen={() => handleOrderClick(item)} />
+            {fillings.map((item, index) => (
+              <IngridientCard key={index} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
         </div>
       </div>
       {isModalOpen && <Overlay />}
       {isModalOpen && <Modal onClose={handleCloseModal}>
-        <div className={styles.detail_inner}>
-          <div className={styles.detail_desc}>
-            <p className="text text_type_main-large">
-              Детали ингридиента
-            </p>
-          </div>
-          <div className={styles.detail_for_center}>
-            <div className={styles.detail_img}>
-              <img src={detail.image_large} alt="image_large" />
-            </div>
-            <div className={styles.detail_name}>
-              <p className="text text_type_main-medium">
-                {detail.name}
-              </p>
-            </div>
-            <div className={styles.composition}>
-              <div className={styles.composition_inner}>
-                <p className="text text_type_main-default">
-                  Калории, ккал
-                </p>
-                <p className="text text_type_digits-default">
-                  {detail.calories}
-                </p>
-              </div>
-              <div className={styles.composition_inner}>
-                <p className="text text_type_main-default">
-                  Белки, г
-                </p>
-                <p className="text text_type_digits-default">
-                  {detail.proteins}
-                </p>
-              </div>
-              <div className={styles.composition_inner}>
-                <p className="text text_type_main-default">
-                  Жиры, г
-                </p>
-                <p className="text text_type_digits-default">
-                  {detail.fat}
-                </p>
-              </div>
-              <div className={styles.composition_inner}>
-                <p className="text text_type_main-default">
-                  Углеводы, г
-                </p>
-                <p className="text text_type_digits-default">
-                  {detail.carbohydrates}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <IngredientDetails detail={detail}/>
       </Modal>}
     </div>
   )
