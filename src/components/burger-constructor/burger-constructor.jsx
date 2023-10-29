@@ -37,7 +37,7 @@ const BurgerConstructor = () => {
           </div>
         </div>
       </div>
-      {isModalOpen && <Overlay />}
+      
       {isModalOpen && <Modal onClose={handleCloseModal}>
         <OrderDetails />
       </Modal>}

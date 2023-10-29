@@ -3,7 +3,7 @@ import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { data } from '../../utils/data'
 import IngridientCard from './ingridient-card/ingridient-card';
-import Overlay from '../modal/overlay';
+
 import Modal from '../modal/modal';
 import IngredientDetails from '../modal/modal-children/ingredient-details'
 
@@ -90,29 +90,29 @@ const BurgerIngredients = () => {
             Булки
           </p>
           <div className={styles.column}>
-            {buns.map((item, index) => (
-              <IngridientCard key={index} item={item} onOpen={() => handleOrderClick(item)} />
+            {buns.map(item => (
+              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
           <p ref={saucesRef} className="text text_type_main-medium">
             Соусы
           </p>
           <div className={styles.column}>
-            {sauces.map((item, index) => (
-              <IngridientCard key={index} item={item} onOpen={() => handleOrderClick(item)} />
+            {sauces.map(item => (
+              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
           <p ref={fillingsRef} className="text text_type_main-medium">
             Начинки
           </p>
           <div className={styles.column}>
-            {fillings.map((item, index) => (
-              <IngridientCard key={index} item={item} onOpen={() => handleOrderClick(item)} />
+            {fillings.map(item => (
+              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
         </div>
       </div>
-      {isModalOpen && <Overlay />}
+      
       {isModalOpen && <Modal onClose={handleCloseModal}>
         <IngredientDetails detail={detail}/>
       </Modal>}

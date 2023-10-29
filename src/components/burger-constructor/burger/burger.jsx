@@ -17,7 +17,7 @@ const Burger = () => {
             </div>
             <div className={styles.inner_ings}>
                 {data.slice(1,6).map((ing, index) => (
-                    <div key={index} className={styles.burger_row}>
+                    <div key={ing._id} className={styles.burger_row}>
                         <DragIcon type="primary" />
                         <ConstructorElement
                             text={ing.name}
