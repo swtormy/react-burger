@@ -1,0 +1,74 @@
+.inner_block {
+    height: 100%;
+}
+
+.inner_ings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    height: fit-content;
+}
+
+.burger_constructor {
+    height: calc(100vh - 168px);
+    width: 100%;
+}
+
+.burger {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 100px;
+    height: 591px;
+}
+
+.burger_row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.burger_row>svg {
+    cursor: pointer;
+}
+
+.burger_row_block {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-left: 32px;
+}
+
+.result_block {
+    height: calc(100% - 691px);
+}
+
+.result {
+    margin-top: 40px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: end;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.price {
+    display: flex;
+    gap: 8px;
+}
+
+.currency {
+    display: flex;
+    align-items: center;
+}
+
+.currency svg {
+    width: 36px;
+    height: 36px;
+}
+
+.button {}
+
+
