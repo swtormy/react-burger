@@ -1,18 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { data } from '../../utils/data'
 import IngridientCard from './ingridient-card/ingridient-card';
-
+import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../modal/modal-children/ingredient-details'
 
-const BurgerIngredients = () => {
+
+const BurgerIngredients = ({ingredients}) => {
   const [current, setCurrent] = useState('one');
 
-  const buns = data.filter(item => item.type === 'bun');
-  const sauces = data.filter(item => item.type === 'sauce');
-  const fillings = data.filter(item => item.type === 'main');
+  const buns = ingredients.filter(item => item.type === 'bun');
+  const sauces = ingredients.filter(item => item.type === 'sauce');
+  const fillings = ingredients.filter(item => item.type === 'main');
 
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -113,11 +113,32 @@ const BurgerIngredients = () => {
         </div>
       </div>
       
-      {isModalOpen && <Modal onClose={handleCloseModal}>
-        <IngredientDetails detail={detail}/>
-      </Modal>}
+      {isModalOpen && (
+        <Modal onClose={handleCloseModal} headerText="Детали ингредиента">
+          <IngredientDetails detail={detail}/>
+        </Modal>
+      )}
     </div>
   )
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      calories: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      image_mobile: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      __v: PropTypes.number.isRequired,
+    })
+  ).isRequired
+};
 
 export default BurgerIngredients
