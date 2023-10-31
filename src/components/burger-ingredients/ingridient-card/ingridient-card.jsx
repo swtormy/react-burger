@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import styles from './ingridient-card.module.css'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
-
+import { ingredientType } from '../../../utils/types';
+import { getFileNameFromUrl } from '../../../utils/utils-funcs';
 
 const IngridientCard = ({ item, onOpen }) => {
 
     return (
         <div className={styles.card} onClick={onOpen}>
             <div className={styles.image}>
-                <img src={item.image} alt="ингридиент" />
+                <img src={item.image} alt={getFileNameFromUrl(item.image)} />
                 {item.name === "Краторная булка N-200i" && <Counter count={1} size="default" extraClass="m-1" />}
             </div>
             <div className={styles.price_block}>
@@ -27,20 +28,7 @@ const IngridientCard = ({ item, onOpen }) => {
 }
 
 IngridientCard.propTypes = {
-    item: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number.isRequired,
-    }),
+    item: ingredientType.isRequired,
     onOpen: PropTypes.func.isRequired,
 }
 

@@ -5,9 +5,10 @@ import IngridientCard from './ingridient-card/ingridient-card';
 import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../modal/modal-children/ingredient-details'
+import { ingredientType } from '../../utils/types';
+import { useModal } from '../../hooks/useModal'
 
-
-const BurgerIngredients = ({ingredients}) => {
+const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = useState('one');
 
   const buns = ingredients.filter(item => item.type === 'bun');
@@ -59,17 +60,14 @@ const BurgerIngredients = ({ingredients}) => {
     };
   }, []);
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [detail, setDetail] = useState(null)
 
   const handleOrderClick = (item) => {
-    setModalOpen(true);
+    openModal()
     setDetail(item)
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
 
 
   return (
@@ -112,10 +110,10 @@ const BurgerIngredients = ({ingredients}) => {
           </div>
         </div>
       </div>
-      
+
       {isModalOpen && (
-        <Modal onClose={handleCloseModal} headerText="Детали ингредиента">
-          <IngredientDetails detail={detail}/>
+        <Modal onClose={closeModal} headerText="Детали ингредиента">
+          <IngredientDetails detail={detail} />
         </Modal>
       )}
     </div>
@@ -123,22 +121,7 @@ const BurgerIngredients = ({ingredients}) => {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    })
-  ).isRequired
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
 };
 
 export default BurgerIngredients

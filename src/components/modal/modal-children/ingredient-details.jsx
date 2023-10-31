@@ -1,16 +1,15 @@
 import React from 'react'
 import styles from './ingridient-details.module.css'
-import { IItem } from '../../burger-ingredients/ingridient-card/ingridient-card'
 import PropTypes from 'prop-types';
-
+import { getFileNameFromUrl } from '../../../utils/utils-funcs'
 
 const IngredientDetails = ({ detail }) => {
   return (
     <div className={styles.detail_inner}>
-      
+
       <div className={styles.detail_for_center}>
         <div className={styles.detail_img}>
-          <img src={detail.image_large} alt="ингридиент" />
+          <img src={detail.image_large} alt={getFileNameFromUrl(detail.image_large)} />
         </div>
         <div className={styles.detail_name}>
           <p className="text text_type_main-medium">

@@ -1,22 +1,16 @@
 import React, { useState } from 'react'
 import styles from './burger-constructor.module.css'
 import Burger from './burger/burger'
-import Overlay from '../modal/modal-overlay'
+import { ingredientType } from '../../utils/types';
 import Modal from '../modal/modal'
 import OrderDetails from '../modal/modal-children/order-details'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
+import { useModal } from '../../hooks/useModal'
 
 const BurgerConstructor = ({ ingredients }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
-  const handleOrderClick = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
   return (
     <div className={styles.burger_constructor}>
       <div className={styles.inner_block}>
@@ -30,7 +24,7 @@ const BurgerConstructor = ({ ingredients }) => {
               </div>
             </div>
             <div className={styles.button}>
-              <Button htmlType="button" type="primary" size="medium" onClick={handleOrderClick}>
+              <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
                 Оформить заказ
               </Button>
             </div>
@@ -38,7 +32,7 @@ const BurgerConstructor = ({ ingredients }) => {
         </div>
       </div>
 
-      {isModalOpen && <Modal onClose={handleCloseModal}>
+      {isModalOpen && <Modal onClose={closeModal}>
         <OrderDetails />
       </Modal>}
     </div>
@@ -46,22 +40,7 @@ const BurgerConstructor = ({ ingredients }) => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    })
-  ).isRequired
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
 };
 
 export default BurgerConstructor

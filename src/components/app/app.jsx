@@ -12,7 +12,7 @@ function App() {
     fetch(API_URL)
       .then(response => {
         if (!response.ok) {
-          console.error('Запрос вернул не 200');
+          return Promise.reject(`Ошибка ${response.status}`);
         }
         return response.json();
       })
