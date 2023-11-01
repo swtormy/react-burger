@@ -2,6 +2,8 @@ import React from 'react'
 import styles from './ingridient-details.module.css'
 import PropTypes from 'prop-types';
 import { getFileNameFromUrl } from '../../../utils/utils-funcs'
+import { ingredientType } from '../../../utils/types';
+
 
 const IngredientDetails = ({ detail }) => {
   return (
@@ -56,7 +58,7 @@ const IngredientDetails = ({ detail }) => {
 }
 
 IngredientDetails.propTypes = {
-  detail: PropTypes.object.isRequired,
+  detail: ingredientType.isRequired,
 }
 
 export default IngredientDetails
