@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo, useContext } from 'react'
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngridientCard from './ingridient-card/ingridient-card';
@@ -7,13 +7,20 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../modal/modal-children/ingredient-details'
 import { ingredientType } from '../../utils/types';
 import { useModal } from '../../hooks/useModal'
+import { IngredientsContext } from '../../contexts/ingredients-context'
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = useState('one');
-
-  const buns = ingredients.filter(item => item.type === 'bun');
-  const sauces = ingredients.filter(item => item.type === 'sauce');
-  const fillings = ingredients.filter(item => item.type === 'main');
+  const { ingredients } = useContext(IngredientsContext);
+  const buns = useMemo(
+    () => ingredients.filter(item => item.type === 'bun'),
+    [ingredients]);
+  const sauces = useMemo(
+    () => ingredients.filter(item => item.type === 'sauce'),
+    [ingredients]);
+  const fillings = useMemo(
+    () => ingredients.filter(item => item.type === 'main'),
+    [ingredients]);
 
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -89,7 +96,7 @@ const BurgerIngredients = ({ ingredients }) => {
           </p>
           <div className={styles.column}>
             {buns.map(item => (
-              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
+              <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
           <p ref={saucesRef} className="text text_type_main-medium">
@@ -97,7 +104,7 @@ const BurgerIngredients = ({ ingredients }) => {
           </p>
           <div className={styles.column}>
             {sauces.map(item => (
-              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
+              <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
           <p ref={fillingsRef} className="text text_type_main-medium">
@@ -105,7 +112,7 @@ const BurgerIngredients = ({ ingredients }) => {
           </p>
           <div className={styles.column}>
             {fillings.map(item => (
-              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
+              <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
         </div>
@@ -120,8 +127,4 @@ const BurgerIngredients = ({ ingredients }) => {
   )
 }
 
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-};
-
-export default BurgerIngredients
+export default React.memo(BurgerIngredients)

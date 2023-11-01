@@ -4,21 +4,26 @@ import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burg
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../../utils/types';
 
-const Burger = ({ingredients}) => {
+const Burger = ({ ingredients }) => {
+    const buns = ingredients.filter(ingredient => ingredient.type === 'bun');
+    const otherIngredients = ingredients.filter(ingredient => ingredient.type !== 'bun');
+
     return (
         <div className={styles.burger}>
-            <div className={styles.burger_row_block}>
-                <ConstructorElement
-                    type="top"
-                    isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
-                />
-            </div>
+            {buns.map((bun, index) => index === 0 && (
+                <div className={styles.burger_row_block} key={`constructor_${bun._id}`}>
+                    <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={`${bun.name} (верх)`}
+                        price={bun.price}
+                        thumbnail={bun.image_mobile}
+                    />
+                </div>
+            ))}
             <div className={styles.inner_ings}>
-                {ingredients.slice(1,6).map((ing, index) => (
-                    <div key={ing._id} className={styles.burger_row}>
+                {otherIngredients.map((ing) => (
+                    <div key={`constructor_${ing._id}`} className={styles.burger_row}>
                         <DragIcon type="primary" />
                         <ConstructorElement
                             text={ing.name}
@@ -28,22 +33,25 @@ const Burger = ({ingredients}) => {
                     </div>
                 ))}
             </div>
-            <div className={styles.burger_row_block}>
-                <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price={200}
-                    thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
-                />
-            </div>
+            {buns.map((bun, index) => index === 0 && (
+                <div className={styles.burger_row_block} key={`constructor_${bun._id}`}>
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={`${bun.name} (низ)`}
+                        price={bun.price}
+                        thumbnail={bun.image_mobile}
+                    />
+                </div>
+            ))}
         </div>
     )
 }
 
+
 Burger.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-  };
+};
 
-  
+
 export default Burger
