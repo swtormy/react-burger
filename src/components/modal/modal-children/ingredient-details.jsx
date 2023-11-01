@@ -1,22 +1,17 @@
 import React from 'react'
 import styles from './ingridient-details.module.css'
-import { IItem } from '../../burger-ingredients/ingridient-card/ingridient-card'
+import PropTypes from 'prop-types';
+import { getFileNameFromUrl } from '../../../utils/utils-funcs'
+import { ingredientType } from '../../../utils/types';
 
-interface IngredientDetailsProps {
-  detail: IItem;
-}
 
-const IngredientDetails: React.FC<IngredientDetailsProps> = ({ detail }) => {
+const IngredientDetails = ({ detail }) => {
   return (
     <div className={styles.detail_inner}>
-      <div className={styles.detail_desc}>
-        <p className="text text_type_main-large">
-          Детали ингридиента
-        </p>
-      </div>
+
       <div className={styles.detail_for_center}>
         <div className={styles.detail_img}>
-          <img src={detail.image_large} alt="ингридиент" />
+          <img src={detail.image_large} alt={getFileNameFromUrl(detail.image_large)} />
         </div>
         <div className={styles.detail_name}>
           <p className="text text_type_main-medium">
@@ -60,6 +55,10 @@ const IngredientDetails: React.FC<IngredientDetailsProps> = ({ detail }) => {
       </div>
     </div>
   )
+}
+
+IngredientDetails.propTypes = {
+  detail: ingredientType.isRequired,
 }
 
 export default IngredientDetails

@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from '../burger-constructor.module.css'
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { data } from '../../../utils/data'
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../../utils/types';
 
-const Burger = () => {
+const Burger = ({ingredients}) => {
     return (
         <div className={styles.burger}>
             <div className={styles.burger_row_block}>
@@ -16,7 +17,7 @@ const Burger = () => {
                 />
             </div>
             <div className={styles.inner_ings}>
-                {data.slice(1,6).map((ing, index) => (
+                {ingredients.slice(1,6).map((ing, index) => (
                     <div key={ing._id} className={styles.burger_row}>
                         <DragIcon type="primary" />
                         <ConstructorElement
@@ -40,4 +41,9 @@ const Burger = () => {
     )
 }
 
+Burger.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientType).isRequired,
+  };
+
+  
 export default Burger

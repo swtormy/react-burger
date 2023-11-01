@@ -2,13 +2,10 @@ import React from 'react'
 import styles from '../app-header.module.css';
 import { Button, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import NavigationLink from '../link/navigation-link';
+import PropTypes from 'prop-types';
 
-interface NavigationMenuProps {
-    board: string;
-    setBoard: (name: string) => void;
-}
 
-const NavigationMenu: React.FC<NavigationMenuProps> = ({ board, setBoard }) => {
+const NavigationMenu = ({ board, setBoard }) => {
     const links = [
         {
             name: 'Конструктор',
@@ -33,6 +30,11 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ board, setBoard }) => {
             ))}
         </div>
     )
+}
+
+NavigationMenu.propTypes = {
+    board: PropTypes.string.isRequired,
+    setBoard: PropTypes.func.isRequired,
 }
 
 export default NavigationMenu

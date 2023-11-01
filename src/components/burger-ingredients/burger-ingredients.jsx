@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { data } from '../../utils/data'
 import IngridientCard from './ingridient-card/ingridient-card';
-
+import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../modal/modal-children/ingredient-details'
+import { ingredientType } from '../../utils/types';
+import { useModal } from '../../hooks/useModal'
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = useState('one');
 
-  const buns = data.filter(item => item.type === 'bun');
-  const sauces = data.filter(item => item.type === 'sauce');
-  const fillings = data.filter(item => item.type === 'main');
+  const buns = ingredients.filter(item => item.type === 'bun');
+  const sauces = ingredients.filter(item => item.type === 'sauce');
+  const fillings = ingredients.filter(item => item.type === 'main');
 
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -59,17 +60,14 @@ const BurgerIngredients = () => {
     };
   }, []);
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [detail, setDetail] = useState(null)
 
   const handleOrderClick = (item) => {
-    setModalOpen(true);
+    openModal()
     setDetail(item)
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
 
 
   return (
@@ -112,12 +110,18 @@ const BurgerIngredients = () => {
           </div>
         </div>
       </div>
-      
-      {isModalOpen && <Modal onClose={handleCloseModal}>
-        <IngredientDetails detail={detail}/>
-      </Modal>}
+
+      {isModalOpen && (
+        <Modal onClose={closeModal} headerText="Детали ингредиента">
+          <IngredientDetails detail={detail} />
+        </Modal>
+      )}
     </div>
   )
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
+};
 
 export default BurgerIngredients
