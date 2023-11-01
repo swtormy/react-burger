@@ -1,12 +1,13 @@
 import React from 'react'
 import styles from './order-details.module.css'
 import DoneSVG from '../../burger-constructor/done-svg'
+import PropTypes from 'prop-types';
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderNumber }) => {
   return (
     <div className={styles.done_form}>
       <div className={styles.order_num}>
-        <p className="text text_type_digits-large">034536</p>
+        <p className="text text_type_digits-large">{orderNumber}</p>
       </div>
       <div className={styles.idn_tex}>
         <p className="text text_type_main-medium">
@@ -23,5 +24,9 @@ const OrderDetails = () => {
     </div>
   )
 }
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
+};
 
 export default OrderDetails

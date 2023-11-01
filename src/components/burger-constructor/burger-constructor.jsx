@@ -8,6 +8,7 @@ import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-co
 import PropTypes from 'prop-types';
 import { useModal } from '../../hooks/useModal'
 import { IngredientsContext } from '../../contexts/ingredients-context'
+import { createOrder } from '../../utils/burger-api'
 
 const initialState = {
   selectedIngredients: [],
@@ -17,36 +18,55 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case 'ADD_INGREDIENT':
-      return {
-        ...state,
-        selectedIngredients: [...state.selectedIngredients, action.payload],
-        totalPrice: state.totalPrice + action.payload.price,
-      };
+      if (action.payload && typeof action.payload.price === 'number') {
+        return {
+          ...state,
+          selectedIngredients: [...state.selectedIngredients, action.payload],
+          totalPrice: state.totalPrice + action.payload.price,
+        };
+      }
+      return state;
     case 'REMOVE_INGREDIENT':
-      const updatedIngredients = state.selectedIngredients.filter(
-        (ingredient) => ingredient.id !== action.payload.id
-      );
-      return {
-        ...state,
-        selectedIngredients: updatedIngredients,
-        totalPrice: state.totalPrice - action.payload.price,
-      };
+      if (action.payload && typeof action.payload.price === 'number') {
+        const updatedIngredients = state.selectedIngredients.filter(
+          (ingredient) => ingredient.id !== action.payload.id
+        );
+        return {
+          ...state,
+          selectedIngredients: updatedIngredients,
+          totalPrice: state.totalPrice - action.payload.price,
+        };
+      }
+      return state;
     default:
       return state;
   }
 };
 
 const BurgerConstructor = () => {
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const { isModalOpen, openModal, orderNumber, closeModal } = useModal();
   const { ingredients } = useContext(IngredientsContext);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    ingredients.forEach(ingredient => {
+    ingredients.filter(ing => ing.type !== 'bun').forEach(ingredient => {
       dispatch({ type: 'ADD_INGREDIENT', payload: ingredient });
     });
+    const bun = ingredients.find(ing => ing.type === 'bun')
+    dispatch({ type: 'ADD_INGREDIENT', payload: bun });
+
   }, [ingredients]);
 
+  const handleOrder = () => {
+    const selectedIngredientIds = state.selectedIngredients.map(ingredient => ingredient._id);
+    createOrder(selectedIngredientIds)
+      .then(orderNumber => {
+        openModal(orderNumber);
+      })
+      .catch(error => {
+        console.error('Ошибка: ', error);
+      });
+  };
   return (
     <div className={styles.burger_constructor}>
       <div className={styles.inner_block}>
@@ -60,7 +80,7 @@ const BurgerConstructor = () => {
               </div>
             </div>
             <div className={styles.button}>
-              <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+              <Button htmlType="button" type="primary" size="medium" onClick={handleOrder}>
                 Оформить заказ
               </Button>
             </div>
@@ -69,7 +89,7 @@ const BurgerConstructor = () => {
       </div>
 
       {isModalOpen && <Modal onClose={closeModal}>
-        <OrderDetails />
+        <OrderDetails orderNumber={orderNumber} />
       </Modal>}
     </div>
   )
