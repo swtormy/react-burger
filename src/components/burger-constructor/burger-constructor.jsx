@@ -1,7 +1,6 @@
 import React, { useContext, useReducer, useEffect } from 'react'
 import styles from './burger-constructor.module.css'
 import Burger from './burger/burger'
-import { ingredientType } from '../../utils/types';
 import Modal from '../modal/modal'
 import OrderDetails from '../modal/modal-children/order-details'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -9,6 +8,7 @@ import PropTypes from 'prop-types';
 import { useModal } from '../../hooks/useModal'
 import { IngredientsContext } from '../../contexts/ingredients-context'
 import { createOrder } from '../../utils/burger-api'
+import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../actions/actions';
 
 const initialState = {
   selectedIngredients: [],
@@ -17,7 +17,7 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_INGREDIENT':
+    case ADD_INGREDIENT:
       if (action.payload && typeof action.payload.price === 'number') {
         return {
           ...state,
@@ -26,7 +26,7 @@ const reducer = (state, action) => {
         };
       }
       return state;
-    case 'REMOVE_INGREDIENT':
+    case REMOVE_INGREDIENT:
       if (action.payload && typeof action.payload.price === 'number') {
         const updatedIngredients = state.selectedIngredients.filter(
           (ingredient) => ingredient.id !== action.payload.id
@@ -50,18 +50,18 @@ const BurgerConstructor = () => {
 
   useEffect(() => {
     ingredients.filter(ing => ing.type !== 'bun').forEach(ingredient => {
-      dispatch({ type: 'ADD_INGREDIENT', payload: ingredient });
+      dispatch({ type: ADD_INGREDIENT, payload: ingredient });
     });
     const bun = ingredients.find(ing => ing.type === 'bun')
-    dispatch({ type: 'ADD_INGREDIENT', payload: bun });
+    dispatch({ type: ADD_INGREDIENT, payload: bun });
 
   }, [ingredients]);
 
   const handleOrder = () => {
     const selectedIngredientIds = state.selectedIngredients.map(ingredient => ingredient._id);
     createOrder(selectedIngredientIds)
-      .then(orderNumber => {
-        openModal(orderNumber);
+      .then(res => {
+        openModal(res.order.number);
       })
       .catch(error => {
         console.error('Ошибка: ', error);

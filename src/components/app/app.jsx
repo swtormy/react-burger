@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     getIngredients()
       .then(data => {
-        setIngredients(data);
+        setIngredients(data.data);
       })
       .catch(error => {
         console.error('Ошибка: ', error);
