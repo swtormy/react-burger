@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useModal } from '../../hooks/useModal'
 import { IngredientsContext } from '../../contexts/ingredients-context'
 import { createOrder } from '../../utils/burger-api'
-import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../actions/actions';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/actions';
 
 const initialState = {
   selectedIngredients: [],
