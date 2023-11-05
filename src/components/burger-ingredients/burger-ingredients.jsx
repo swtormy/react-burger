@@ -7,9 +7,9 @@ import IngredientDetails from '../modal/modal-children/ingredient-details'
 import { useModal } from '../../hooks/useModal'
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients, addCurrentIngredient } from '../../services/actions/ingredients';
+import useScrollTabs from '../../hooks/useScrollTabs'
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState('one');
   const dispatch = useDispatch();
   const { ingredientsList } = useSelector(state => state.ingredients);
 
@@ -27,50 +27,14 @@ const BurgerIngredients = () => {
     () => ingredientsList.filter(item => item.type === 'main'),
     [ingredientsList]);
 
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const fillingsRef = useRef(null);
+  const {
+    current,
+    bunsRef,
+    saucesRef,
+    fillingsRef,
+    handleTabClick,
+  } = useScrollTabs();
 
-  const handleTabClick = (value) => {
-    setCurrent(value);
-  };
-
-  useEffect(() => {
-    switch (current) {
-      case 'one':
-        bunsRef.current.scrollIntoView({ behavior: 'smooth' });
-        break;
-      case 'two':
-        saucesRef.current.scrollIntoView({ behavior: 'smooth' });
-        break;
-      case 'three':
-        fillingsRef.current.scrollIntoView({ behavior: 'smooth' });
-        break;
-      default:
-        break;
-    }
-  }, [current]);
-
-  const handleScroll = () => {
-    const bunsTop = bunsRef.current.getBoundingClientRect().top;
-    const saucesTop = saucesRef.current.getBoundingClientRect().top;
-    const fillingsTop = fillingsRef.current.getBoundingClientRect().top;
-
-    if (bunsTop >= 0 && bunsTop < window.innerHeight) {
-      setCurrent('one');
-    } else if (saucesTop >= 0 && saucesTop < window.innerHeight) {
-      setCurrent('two');
-    } else if (fillingsTop >= 0 && fillingsTop < window.innerHeight) {
-      setCurrent('three');
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -94,8 +58,8 @@ const BurgerIngredients = () => {
             <Tab value="three" active={current === 'three'} onClick={() => handleTabClick('three')}>Начинки</Tab>
           </div>
         </div>
-        <div className={styles.ingridients}>
-          <p ref={bunsRef} className="text text_type_main-medium">
+        <div className={styles.ingridients} id="ingredients-container">
+          <p id="one" ref={bunsRef} className="text text_type_main-medium">
             Булки
           </p>
           <div className={styles.column}>
@@ -103,7 +67,7 @@ const BurgerIngredients = () => {
               <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
-          <p ref={saucesRef} className="text text_type_main-medium">
+          <p id="two" ref={saucesRef} className="text text_type_main-medium">
             Соусы
           </p>
           <div className={styles.column}>
@@ -111,7 +75,7 @@ const BurgerIngredients = () => {
               <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
-          <p ref={fillingsRef} className="text text_type_main-medium">
+          <p id="three" ref={fillingsRef} className="text text_type_main-medium">
             Начинки
           </p>
           <div className={styles.column}>
