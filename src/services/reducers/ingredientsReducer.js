@@ -3,11 +3,9 @@ const initialState = {
     currentIngredient: {}
 };
 
-function ingredientsReducer(state = initialState, action) {
+export default function ingredientsReducer(state = initialState, action) {
     switch (action.type) {
         default:
             return state;
     }
 }
-
-export default ingredientsReducer;

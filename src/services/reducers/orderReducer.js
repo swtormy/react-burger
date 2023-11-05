@@ -2,11 +2,9 @@ const initialState = {
     order: {}
 };
 
-function orderReducer(state = initialState, action) {
+export default function orderReducer(state = initialState, action) {
     switch (action.type) {
         default:
             return state;
     }
 }
-
-export default orderReducer;
