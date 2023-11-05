@@ -1,22 +1,24 @@
 import { useState, useCallback } from "react";
+import { useDispatch } from 'react-redux';
+import { removeCurrentOrder } from '../services/actions/order';
 
 export const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [orderNumber, setOrderNumber] = useState(null)
 
-  const openModal = useCallback((orderNumber) => {
+  const dispatch = useDispatch();
+
+  const openModal = useCallback(() => {
     setIsModalOpen(true);
-    setOrderNumber(orderNumber)
   }, []);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
+    dispatch(removeCurrentOrder(null))
   }, []);
 
   return {
     isModalOpen,
     openModal,
-    orderNumber,
     closeModal,
   };
 };

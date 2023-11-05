@@ -1,26 +1,31 @@
-import React, { useState, useRef, useEffect, useMemo, useContext } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngridientCard from './ingridient-card/ingridient-card';
-import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../modal/modal-children/ingredient-details'
-import { ingredientType } from '../../utils/types';
 import { useModal } from '../../hooks/useModal'
-import { IngredientsContext } from '../../contexts/ingredients-context'
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients, addCurrentIngredient } from '../../services/actions/ingredients';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('one');
-  const { ingredients } = useContext(IngredientsContext);
+  const dispatch = useDispatch();
+  const { ingredientsList } = useSelector(state => state.ingredients);
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
   const buns = useMemo(
-    () => ingredients.filter(item => item.type === 'bun'),
-    [ingredients]);
+    () => ingredientsList.filter(item => item.type === 'bun'),
+    [ingredientsList]);
   const sauces = useMemo(
-    () => ingredients.filter(item => item.type === 'sauce'),
-    [ingredients]);
+    () => ingredientsList.filter(item => item.type === 'sauce'),
+    [ingredientsList]);
   const fillings = useMemo(
-    () => ingredients.filter(item => item.type === 'main'),
-    [ingredients]);
+    () => ingredientsList.filter(item => item.type === 'main'),
+    [ingredientsList]);
 
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -68,11 +73,10 @@ const BurgerIngredients = () => {
   }, []);
 
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [detail, setDetail] = useState(null)
 
   const handleOrderClick = (item) => {
+    dispatch(addCurrentIngredient(item))
     openModal()
-    setDetail(item)
   };
 
 
@@ -120,7 +124,7 @@ const BurgerIngredients = () => {
 
       {isModalOpen && (
         <Modal onClose={closeModal} headerText="Детали ингредиента">
-          <IngredientDetails detail={detail} />
+          <IngredientDetails />
         </Modal>
       )}
     </div>

@@ -1,80 +1,49 @@
-import React, { useContext, useReducer, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styles from './burger-constructor.module.css'
 import Burger from './burger/burger'
 import Modal from '../modal/modal'
 import OrderDetails from '../modal/modal-children/order-details'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
 import { useModal } from '../../hooks/useModal'
-import { IngredientsContext } from '../../contexts/ingredients-context'
-import { createOrder } from '../../utils/burger-api'
-import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/actions';
+import { createOrder } from '../../services/actions/order'
+import { useDispatch, useSelector } from 'react-redux'
+import { addIngredient } from '../../services/actions/constructor'
 
-const initialState = {
-  selectedIngredients: [],
-  totalPrice: 0,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case ADD_INGREDIENT:
-      if (action.payload && typeof action.payload.price === 'number') {
-        return {
-          ...state,
-          selectedIngredients: [...state.selectedIngredients, action.payload],
-          totalPrice: state.totalPrice + action.payload.price,
-        };
-      }
-      return state;
-    case REMOVE_INGREDIENT:
-      if (action.payload && typeof action.payload.price === 'number') {
-        const updatedIngredients = state.selectedIngredients.filter(
-          (ingredient) => ingredient.id !== action.payload.id
-        );
-        return {
-          ...state,
-          selectedIngredients: updatedIngredients,
-          totalPrice: state.totalPrice - action.payload.price,
-        };
-      }
-      return state;
-    default:
-      return state;
-  }
-};
 
 const BurgerConstructor = () => {
-  const { isModalOpen, openModal, orderNumber, closeModal } = useModal();
-  const { ingredients } = useContext(IngredientsContext);
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const dispatch = useDispatch();
+  const { ingredientsList } = useSelector(store => store.ingredients);
+  const { constructorIngredients, totalPrice } = useSelector(store => store.burger_constructor);
+  const { order } = useSelector(store => store.order);
 
   useEffect(() => {
-    ingredients.filter(ing => ing.type !== 'bun').forEach(ingredient => {
-      dispatch({ type: ADD_INGREDIENT, payload: ingredient });
-    });
-    const bun = ingredients.find(ing => ing.type === 'bun')
-    dispatch({ type: ADD_INGREDIENT, payload: bun });
-
-  }, [ingredients]);
+    if (ingredientsList.length > 0) {
+      ingredientsList.filter(ing => ing.type !== 'bun').forEach(ingredient => {
+        dispatch(addIngredient(ingredient));
+      });
+      const bun = ingredientsList.find(ing => ing.type === 'bun')
+      dispatch(addIngredient(bun));
+    }
+  }, [ingredientsList, dispatch]);
 
   const handleOrder = () => {
-    const selectedIngredientIds = state.selectedIngredients.map(ingredient => ingredient._id);
-    createOrder(selectedIngredientIds)
-      .then(res => {
-        openModal(res.order.number);
-      })
-      .catch(error => {
-        console.error('Ошибка: ', error);
-      });
+    const constIng = constructorIngredients?.map(ingredient => ingredient._id);
+    dispatch(createOrder(constIng));
   };
+
+  useEffect(() => {
+    order && openModal(order)
+  }, [order])
   return (
     <div className={styles.burger_constructor}>
       <div className={styles.inner_block}>
-        <Burger ingredients={state.selectedIngredients} />
+        <Burger />
         <div className={styles.result_block} >
           <div className={styles.result}>
             <div className={styles.price}>
-              <p className="text text_type_digits-medium">{state.totalPrice}</p>
+              <p className="text text_type_digits-medium">{totalPrice}</p>
               <div className={styles.currency}>
                 <CurrencyIcon type="primary" />
               </div>
@@ -89,7 +58,7 @@ const BurgerConstructor = () => {
       </div>
 
       {isModalOpen && <Modal onClose={closeModal}>
-        <OrderDetails orderNumber={orderNumber} />
+        <OrderDetails />
       </Modal>}
     </div>
   )

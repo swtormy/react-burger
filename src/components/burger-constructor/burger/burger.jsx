@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from '../burger-constructor.module.css'
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../../utils/types';
+import { useSelector } from 'react-redux'
 
-const Burger = ({ ingredients }) => {
-    const buns = ingredients.filter(ingredient => ingredient.type === 'bun');
-    const otherIngredients = ingredients.filter(ingredient => ingredient.type !== 'bun');
+const Burger = () => {
+    const { constructorIngredients } = useSelector(state => state.burger_constructor);
+
+    const buns = useMemo(
+        () => constructorIngredients?.filter(ingredient => ingredient.type === 'bun'),
+        [constructorIngredients])
+    const otherIngredients = useMemo(
+        () => constructorIngredients?.filter(ingredient => ingredient.type !== 'bun'),
+        [constructorIngredients]);
 
     return (
         <div className={styles.burger}>
-            {buns.map((bun, index) => index === 0 && (
+            {buns?.map((bun, index) => index === 0 && (
                 <div className={styles.burger_row_block} key={`constructor_${bun._id}`}>
                     <ConstructorElement
                         type="top"
@@ -22,7 +27,7 @@ const Burger = ({ ingredients }) => {
                 </div>
             ))}
             <div className={styles.inner_ings}>
-                {otherIngredients.map((ing) => (
+                {otherIngredients?.map((ing) => (
                     <div key={`constructor_${ing._id}`} className={styles.burger_row}>
                         <DragIcon type="primary" />
                         <ConstructorElement
@@ -33,7 +38,7 @@ const Burger = ({ ingredients }) => {
                     </div>
                 ))}
             </div>
-            {buns.map((bun, index) => index === 0 && (
+            {buns?.map((bun, index) => index === 0 && (
                 <div className={styles.burger_row_block} key={`constructor_${bun._id}`}>
                     <ConstructorElement
                         type="bottom"
@@ -49,9 +54,6 @@ const Burger = ({ ingredients }) => {
 }
 
 
-Burger.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-};
 
 
 export default Burger

@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from './order-details.module.css'
 import DoneSVG from '../../burger-constructor/done-svg'
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = () => {
+  const orderNumber = useSelector(state => state.order.order);
   return (
     <div className={styles.done_form}>
       <div className={styles.order_num}>
@@ -20,13 +21,9 @@ const OrderDetails = ({ orderNumber }) => {
       <div className={styles.desc_txt}><p className="text text_type_main-default">
         Дождитесь готовности на орбитальной станции
       </p></div>
-
     </div>
   )
 }
 
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
-};
 
 export default OrderDetails

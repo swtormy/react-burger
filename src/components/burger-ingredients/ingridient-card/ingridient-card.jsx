@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from './ingridient-card.module.css'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
