@@ -10,7 +10,6 @@ export const addIngredient = (ingredient) => {
     return (dispatch, getState) => {
         const currentState = getState();
         const currentLength = currentState.burger_constructor.constructorIngredients?.length ?? 0;
-        console.log('Current length:', currentLength);
         if (ingredient.type === 'bun') {
             const topBunInstanceId = uuidv4();
             const bottomBunInstanceId = uuidv4();

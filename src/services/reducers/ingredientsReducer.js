@@ -1,7 +1,7 @@
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
-    GET_INGREDIENTS_FAILURE,
+    GET_INGREDIENTS_ERROR,
     ADD_CURRENT_INGREDIENT,
     REMOVE_CURRENT_INGREDIENT
 } from '../actions/ingredients';
@@ -26,7 +26,7 @@ export default function ingredientsReducer(state = initialState, action) {
                 isLoading: false,
                 ingredientsList: action.payload,
             };
-        case GET_INGREDIENTS_FAILURE:
+        case GET_INGREDIENTS_ERROR:
             return {
                 ...state,
                 isLoading: false,

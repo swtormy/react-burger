@@ -1,7 +1,7 @@
 import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
-    GET_ORDER_FAILURE,
+    GET_ORDER_ERROR,
     REMOVE_CURRENT_ORDER,
 } from '../actions/order';
 
@@ -24,7 +24,7 @@ export default function orderReducer(state = initialState, action) {
                 isLoading: false,
                 order: action.payload,
             };
-        case GET_ORDER_FAILURE:
+        case GET_ORDER_ERROR:
             return {
                 ...state,
                 isLoading: false,

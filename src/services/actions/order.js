@@ -3,7 +3,7 @@ import { createOrder as fetchOrder } from '../../utils/burger-api';
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const GET_ORDER_FAILURE = 'GET_ORDER_FAILURE';
+export const GET_ORDER_ERROR = 'GET_ORDER_ERROR';
 
 export const REMOVE_CURRENT_ORDER = 'REMOVE_CURRENT_ORDER';
 
@@ -22,8 +22,11 @@ export const createOrder = (ids) => {
             })
             .catch(error => {
                 dispatch({
-                    type: GET_ORDER_FAILURE,
+                    type: GET_ORDER_ERROR,
                     payload: error,
+                });
+                dispatch({
+                    type: REMOVE_CURRENT_ORDER,
                 });
             });
     };

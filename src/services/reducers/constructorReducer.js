@@ -32,7 +32,7 @@ export default function constructorReducer(state = initialState, action) {
                 updatedTotalPrice += action.payload.price;
             }
 
-            updatedConstructorIngredients.sort((a, b) => a.index - b.index);
+            updatedConstructorIngredients.sort((a, b) => a.orderIndex - b.orderIndex);
 
             return {
                 ...state,
@@ -53,7 +53,6 @@ export default function constructorReducer(state = initialState, action) {
         case UPDATE_ORDER_INDEX: {
             const { oldIndex, newIndex } = action.payload;
             let updatedConstructorIngredients = [...state.constructorIngredients];
-            console.log('asfsa');
             const oldOrderIngredient = updatedConstructorIngredients.find(ingredient => ingredient.orderIndex === oldIndex);
             const newOrderIngredient = updatedConstructorIngredients.find(ingredient => ingredient.orderIndex === newIndex);
 
