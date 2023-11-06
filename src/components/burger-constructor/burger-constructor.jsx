@@ -7,26 +7,18 @@ import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-co
 import { useModal } from '../../hooks/useModal'
 import { createOrder } from '../../services/actions/order'
 import { useDispatch, useSelector } from 'react-redux'
-import { addIngredient } from '../../services/actions/constructor'
+
 
 
 const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const dispatch = useDispatch();
-  const { ingredientsList } = useSelector(store => store.ingredients);
+
   const { constructorIngredients, totalPrice } = useSelector(store => store.burger_constructor);
   const { order } = useSelector(store => store.order);
 
-  useEffect(() => {
-    if (ingredientsList.length > 0) {
-      ingredientsList.filter(ing => ing.type !== 'bun').forEach(ingredient => {
-        dispatch(addIngredient(ingredient));
-      });
-      const bun = ingredientsList.find(ing => ing.type === 'bun')
-      dispatch(addIngredient(bun));
-    }
-  }, [ingredientsList, dispatch]);
+  
 
   const handleOrder = () => {
     const constIng = constructorIngredients?.map(ingredient => ingredient._id);
@@ -36,6 +28,8 @@ const BurgerConstructor = () => {
   useEffect(() => {
     order && openModal(order)
   }, [order])
+
+  
   return (
     <div className={styles.burger_constructor}>
       <div className={styles.inner_block}>

@@ -2,13 +2,7 @@
     height: 100%;
 }
 
-.inner_ings {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
-    height: fit-content;
-}
+
 
 .burger_constructor {
     height: calc(100vh - 168px);
@@ -23,11 +17,6 @@
     height: 591px;
 }
 
-.burger_row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
 
 .burger_row>svg {
     cursor: pointer;
