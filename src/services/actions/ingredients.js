@@ -14,10 +14,10 @@ export const getIngredients = () => {
         });
 
         fetchIngredients()
-            .then(data => {
+            .then(res => {
                 dispatch({
                     type: GET_INGREDIENTS_SUCCESS,
-                    payload: data.data,
+                    payload: res.data,
                 });
             })
             .catch(error => {

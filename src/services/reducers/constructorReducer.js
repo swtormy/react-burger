@@ -1,4 +1,5 @@
 import {
+    ADD_BUNS,
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
     UPDATE_ORDER_INDEX
@@ -6,49 +7,35 @@ import {
 
 
 const initialState = {
-    constructorIngredients: [],
-    totalPrice: 0
+    constructorIngredients: []
 };
 
 export default function constructorReducer(state = initialState, action) {
 
     switch (action.type) {
         case ADD_INGREDIENT: {
-            let updatedConstructorIngredients = [...state.constructorIngredients];
-            let updatedTotalPrice = state.totalPrice;
-
-            if (action.payload.bun) {
-                updatedConstructorIngredients = updatedConstructorIngredients.filter(ingredient => {
-                    if (ingredient.type === 'bun') {
-                        updatedTotalPrice -= ingredient.price;
-                        return false;
-                    }
-                    return true;
-                });
-                updatedConstructorIngredients.push(...action.payload.bun);
-                updatedTotalPrice += action.payload.bun[0].price * 2;
-            } else {
-                updatedConstructorIngredients.push(action.payload);
-                updatedTotalPrice += action.payload.price;
-            }
-
-            updatedConstructorIngredients.sort((a, b) => a.orderIndex - b.orderIndex);
-
+            const updatedConstructorIngredients = [...state.constructorIngredients];
+            updatedConstructorIngredients.push(action.payload);
             return {
                 ...state,
                 constructorIngredients: updatedConstructorIngredients,
-                totalPrice: updatedTotalPrice,
             };
         }
+        case ADD_BUNS: {
+            const updatedConstructorIngredients = state.constructorIngredients.filter(ingredient => ingredient.type !== "bun");
+            return {
+                ...state,
+                constructorIngredients: updatedConstructorIngredients.concat(action.payload),
+            };
+        }
+
         case REMOVE_INGREDIENT:
             const newIngredientsList = state.constructorIngredients.filter(
                 ingredient => ingredient.instanceId !== action.payload
             );
-            const newTotalPrice = newIngredientsList.reduce((total, ingredient) => total + ingredient.price, 0);
             return {
                 ...state,
-                constructorIngredients: newIngredientsList,
-                totalPrice: newTotalPrice,
+                constructorIngredients: newIngredientsList
             };
         case UPDATE_ORDER_INDEX: {
             const { oldIndex, newIndex } = action.payload;
@@ -60,10 +47,10 @@ export default function constructorReducer(state = initialState, action) {
                 oldOrderIngredient.orderIndex = newIndex;
                 newOrderIngredient.orderIndex = oldIndex;
             }
-            updatedConstructorIngredients.sort((a, b) => a.orderIndex - b.orderIndex);
+            
             return {
                 ...state,
-                constructorIngredients: updatedConstructorIngredients
+                constructorIngredients: updatedConstructorIngredients.toSorted((a, b) => a.orderIndex - b.orderIndex)
             };
         }
         default:

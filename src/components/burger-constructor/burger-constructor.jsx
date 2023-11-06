@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styles from './burger-constructor.module.css'
 import Burger from './burger/burger'
 import Modal from '../modal/modal'
@@ -15,21 +15,33 @@ const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
 
-  const { constructorIngredients, totalPrice } = useSelector(store => store.burger_constructor);
+  const { constructorIngredients } = useSelector(store => store.burger_constructor);
   const { order } = useSelector(store => store.order);
 
-  
+  const { buns, notBuns, disabled, totalPrice } = useMemo(() => {
+    const buns = constructorIngredients.filter(ingredient => ingredient.type === 'bun')
+    const notBuns = constructorIngredients.filter(ingredient => ingredient.type !== 'bun')
+    const disabled = constructorIngredients.length === 0 || buns.length !== 2
+    const totalPrice = constructorIngredients.reduce((total, item) => total + item.price, 0);
+    return { buns, notBuns, disabled, totalPrice }
+  }, [constructorIngredients]);
 
   const handleOrder = () => {
-    const constIng = constructorIngredients?.map(ingredient => ingredient._id);
-    dispatch(createOrder(constIng));
+    if (!disabled) {
+      buns.splice(1, 0, ...notBuns);
+      dispatch(createOrder(buns));
+    } else {
+      console.error("неправильно собран заказ")
+    }
   };
 
   useEffect(() => {
-    order && openModal(order)
-  }, [order])
+    if (order) {
+      openModal(order)
+    }
+  }, [order, openModal])
 
-  
+
   return (
     <div className={styles.burger_constructor}>
       <div className={styles.inner_block}>
@@ -43,7 +55,7 @@ const BurgerConstructor = () => {
               </div>
             </div>
             <div className={styles.button}>
-              <Button htmlType="button" type="primary" size="medium" onClick={handleOrder}>
+              <Button disabled={disabled} htmlType="button" type="primary" size="medium" onClick={handleOrder}>
                 Оформить заказ
               </Button>
             </div>

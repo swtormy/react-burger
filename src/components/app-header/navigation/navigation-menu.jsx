@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../app-header.module.css';
-import { Button, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import NavigationLink from '../link/navigation-link';
 import PropTypes from 'prop-types';
 

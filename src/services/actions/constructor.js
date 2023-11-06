@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT'
+export const ADD_BUNS = 'ADD_BUNS'
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
 export const UPDATE_ORDER_INDEX = 'UPDATE_ORDER_INDEX'
 
@@ -10,26 +11,17 @@ export const addIngredient = (ingredient) => {
     return (dispatch, getState) => {
         const currentState = getState();
         const currentLength = currentState.burger_constructor.constructorIngredients?.length ?? 0;
-        if (ingredient.type === 'bun') {
-            const topBunInstanceId = uuidv4();
-            const bottomBunInstanceId = uuidv4();
-            dispatch({
-                type: ADD_INGREDIENT,
-                payload: {
-                    bun: [
-                        { ...ingredient, instanceId: topBunInstanceId, position: 'top' },
-                        { ...ingredient, instanceId: bottomBunInstanceId, position: 'bottom' }
-                    ]
-                },
-            });
-        } else {
-            dispatch({
-                type: ADD_INGREDIENT,
-                payload: { ...ingredient, instanceId, orderIndex: currentLength },
-            });
-        }
+        dispatch({
+            type: ADD_INGREDIENT,
+            payload: { ...ingredient, instanceId, orderIndex: currentLength },
+        });
     };
 };
+
+export const addBuns = (ingredient) => ({
+    type: ADD_BUNS,
+    payload: [{ ...ingredient, instanceId: uuidv4() }, { ...ingredient, instanceId: uuidv4() }]
+});
 
 export const removeIngredient = (ingredient) => ({
     type: REMOVE_INGREDIENT,

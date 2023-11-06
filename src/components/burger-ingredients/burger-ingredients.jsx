@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngridientCard from './ingridient-card/ingridient-card';
@@ -17,15 +17,12 @@ const BurgerIngredients = () => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const buns = useMemo(
-    () => ingredientsList.filter(item => item.type === 'bun'),
-    [ingredientsList]);
-  const sauces = useMemo(
-    () => ingredientsList.filter(item => item.type === 'sauce'),
-    [ingredientsList]);
-  const fillings = useMemo(
-    () => ingredientsList.filter(item => item.type === 'main'),
-    [ingredientsList]);
+  const { buns, sauces, fillings } = useMemo(() => {
+    const buns = ingredientsList.filter(item => item.type === 'bun');
+    const sauces = ingredientsList.filter(item => item.type === 'sauce');
+    const fillings = ingredientsList.filter(item => item.type === 'main');
+    return { buns, sauces, fillings };
+  }, [ingredientsList]);
 
   const {
     current,
