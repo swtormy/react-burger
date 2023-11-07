@@ -28,8 +28,8 @@ const BurgerConstructor = () => {
 
   const handleOrder = () => {
     if (!disabled) {
-      buns.splice(1, 0, ...notBuns);
-      dispatch(createOrder(buns));
+      const ingredientsIds = [bun._id, ...notBuns.map(ingredient => ingredient._id), bun._id];
+      dispatch(createOrder(ingredientsIds));
     } else {
       console.error("неправильно собран заказ")
     }
