@@ -1,0 +1,10 @@
+.burger_row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    cursor: grab;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+.opacity_on {
+    opacity: 0.25;
+}

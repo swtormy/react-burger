@@ -1,49 +1,61 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from '../burger-constructor.module.css'
-import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../../utils/types';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useSelector, useDispatch } from 'react-redux'
+import { addBuns, addIngredient } from '../../../services/actions/constructor'
+import { useDrop } from "react-dnd";
+import InnerIngredients from '../inner-ingredients/inner-ingredients'
+import { v4 as uuidv4 } from 'uuid';
 
-const Burger = ({ingredients}) => {
+const Burger = () => {
+    const { constructorIngredients } = useSelector(state => state.burger_constructor);
+    const dispatch = useDispatch()
+
+    const bun = useMemo(
+        () => constructorIngredients.find(item => item.type === 'bun'),
+        [constructorIngredients]);
+
+
+    const [, refDrop] = useDrop({
+        accept: 'ingredient',
+        drop: (item) => {
+            if (item.type === 'bun') {
+                dispatch(addBuns(item))
+            } else {
+                dispatch(addIngredient(item));
+            }
+        },
+
+    });
+
+
+
     return (
-        <div className={styles.burger}>
-            <div className={styles.burger_row_block}>
+        <div ref={refDrop} className={styles.burger}>
+            {bun && <div className={styles.burger_row_block} key={`constructor_${uuidv4()}`}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
+                    text={`${bun.name} (верх)`}
+                    price={bun.price}
+                    thumbnail={bun.image_mobile}
                 />
-            </div>
-            <div className={styles.inner_ings}>
-                {ingredients.slice(1,6).map((ing, index) => (
-                    <div key={ing._id} className={styles.burger_row}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={ing.name}
-                            price={ing.price}
-                            thumbnail={ing.image_mobile}
-                        />
-                    </div>
-                ))}
-            </div>
-            <div className={styles.burger_row_block}>
+            </div>}
+            <InnerIngredients />
+            {bun && <div className={styles.burger_row_block} key={`constructor_${uuidv4()}`}>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price={200}
-                    thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
+                    text={`${bun.name} (низ)`}
+                    price={bun.price}
+                    thumbnail={bun.image_mobile}
                 />
-            </div>
+            </div>}
         </div>
     )
 }
 
-Burger.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-  };
 
-  
+
+
 export default Burger

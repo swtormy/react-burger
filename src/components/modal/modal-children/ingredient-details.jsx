@@ -1,21 +1,19 @@
 import React from 'react'
 import styles from './ingridient-details.module.css'
-import PropTypes from 'prop-types';
 import { getFileNameFromUrl } from '../../../utils/utils-funcs'
-import { ingredientType } from '../../../utils/types';
+import { useSelector } from 'react-redux';
 
-
-const IngredientDetails = ({ detail }) => {
+const IngredientDetails = () => {
+  const { currentIngredient } = useSelector(state => state.ingredients);
   return (
     <div className={styles.detail_inner}>
-
       <div className={styles.detail_for_center}>
         <div className={styles.detail_img}>
-          <img src={detail.image_large} alt={getFileNameFromUrl(detail.image_large)} />
+          <img src={currentIngredient.image_large} alt={getFileNameFromUrl(currentIngredient.image_large)} />
         </div>
         <div className={styles.detail_name}>
           <p className="text text_type_main-medium">
-            {detail.name}
+            {currentIngredient.name}
           </p>
         </div>
         <div className={styles.composition}>
@@ -24,7 +22,7 @@ const IngredientDetails = ({ detail }) => {
               Калории, ккал
             </p>
             <p className="text text_type_digits-default">
-              {detail.calories}
+              {currentIngredient.calories}
             </p>
           </div>
           <div className={styles.composition_inner}>
@@ -32,7 +30,7 @@ const IngredientDetails = ({ detail }) => {
               Белки, г
             </p>
             <p className="text text_type_digits-default">
-              {detail.proteins}
+              {currentIngredient.proteins}
             </p>
           </div>
           <div className={styles.composition_inner}>
@@ -40,7 +38,7 @@ const IngredientDetails = ({ detail }) => {
               Жиры, г
             </p>
             <p className="text text_type_digits-default">
-              {detail.fat}
+              {currentIngredient.fat}
             </p>
           </div>
           <div className={styles.composition_inner}>
@@ -48,7 +46,7 @@ const IngredientDetails = ({ detail }) => {
               Углеводы, г
             </p>
             <p className="text text_type_digits-default">
-              {detail.carbohydrates}
+              {currentIngredient.carbohydrates}
             </p>
           </div>
         </div>
@@ -57,8 +55,5 @@ const IngredientDetails = ({ detail }) => {
   )
 }
 
-IngredientDetails.propTypes = {
-  detail: ingredientType.isRequired,
-}
 
 export default IngredientDetails
