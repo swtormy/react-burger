@@ -18,12 +18,12 @@ const BurgerConstructor = () => {
   const { constructorIngredients } = useSelector(store => store.burger_constructor);
   const { order } = useSelector(store => store.order);
 
-  const { buns, notBuns, disabled, totalPrice } = useMemo(() => {
-    const buns = constructorIngredients.filter(ingredient => ingredient.type === 'bun')
+  const { bun, notBuns, disabled, totalPrice } = useMemo(() => {
+    const bun = constructorIngredients.find(ingredient => ingredient.type === 'bun') 
     const notBuns = constructorIngredients.filter(ingredient => ingredient.type !== 'bun')
-    const disabled = constructorIngredients.length === 0 || buns.length !== 2
+    const disabled = constructorIngredients.length === 0 || !bun  
     const totalPrice = constructorIngredients.reduce((total, item) => total + item.price, 0);
-    return { buns, notBuns, disabled, totalPrice }
+    return { bun, notBuns, disabled, totalPrice }
   }, [constructorIngredients]);
 
   const handleOrder = () => {
