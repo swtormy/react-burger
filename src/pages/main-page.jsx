@@ -1,21 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types';
-import { ingredientType } from '../utils/types';
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const MainPage = ({ ingredients }) => {
-    if (!ingredients) return null
+const MainPage = () => {
     return (
-        <>
-            <BurgerIngredients ingredients={ingredients} />
-            <BurgerConstructor ingredients={ingredients} />
-        </>
+        <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+        </DndProvider>
     )
 }
 
-MainPage.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-};
 
 export default MainPage

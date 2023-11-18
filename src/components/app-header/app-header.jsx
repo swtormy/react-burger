@@ -9,14 +9,18 @@ const AppHeader = () => {
     const [board, setBoard] = useState("Конструктор")
     return (
         <header className={styles.header}>
-            <NavigationMenu board={board} setBoard={setBoard} />
-            <Logo />
-            <NavigationLink
-                board={board}
-                setBoard={setBoard}
-                icon={<ProfileIcon type={board === 'Личный кабинет' ? "primary" : "secondary"} />}
-                name={'Личный кабинет'}
-            />
+            <div className={styles.header_container}>
+                <NavigationMenu board={board} setBoard={setBoard} />
+                <div className={styles.logo}>
+                    <Logo />
+                </div>
+                <NavigationLink
+                    board={board}
+                    setBoard={setBoard}
+                    icon={<ProfileIcon type={board === 'Личный кабинет' ? "primary" : "secondary"} />}
+                    name={'Личный кабинет'}
+                />
+            </div>
         </header>
     )
 }

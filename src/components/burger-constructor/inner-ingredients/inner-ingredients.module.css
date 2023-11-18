@@ -3,6 +3,6 @@
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    height: fit-content;
+    max-height: 464px;
 }
 
