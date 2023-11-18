@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './app.module.css'
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainPage from '../../pages/main-page';
 
 function App() {
   const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
@@ -26,13 +26,18 @@ function App() {
 
 
   return (
-    <div className={styles.main}>
-      <AppHeader />
-      <main className={styles.articleContainer}>
-        {ingredients && <BurgerIngredients ingredients={ingredients} />}
-        {ingredients && <BurgerConstructor ingredients={ingredients} />}
-      </main>
-    </div>
+    <BrowserRouter>
+      <div className={styles.main}>
+        <AppHeader />
+        <main className={styles.articleContainer}>
+          <Routes>
+            <Route path="/" element={
+              <MainPage ingredients={ingredients}/>
+            } />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
 
