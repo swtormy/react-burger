@@ -1,71 +1,43 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngridientCard from './ingridient-card/ingridient-card';
-import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../modal/modal-children/ingredient-details'
-import { ingredientType } from '../../utils/types';
 import { useModal } from '../../hooks/useModal'
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients, addCurrentIngredient } from '../../services/actions/ingredients';
+import useScrollTabs from '../../hooks/useScrollTabs'
 
-const BurgerIngredients = ({ ingredients }) => {
-  const [current, setCurrent] = useState('one');
-
-  const buns = ingredients.filter(item => item.type === 'bun');
-  const sauces = ingredients.filter(item => item.type === 'sauce');
-  const fillings = ingredients.filter(item => item.type === 'main');
-
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const fillingsRef = useRef(null);
-
-  const handleTabClick = (value) => {
-    setCurrent(value);
-  };
+const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+  const { ingredientsList } = useSelector(state => state.ingredients);
 
   useEffect(() => {
-    switch (current) {
-      case 'one':
-        bunsRef.current.scrollIntoView({ behavior: 'smooth' });
-        break;
-      case 'two':
-        saucesRef.current.scrollIntoView({ behavior: 'smooth' });
-        break;
-      case 'three':
-        fillingsRef.current.scrollIntoView({ behavior: 'smooth' });
-        break;
-      default:
-        break;
-    }
-  }, [current]);
+    dispatch(getIngredients());
+  }, [dispatch]);
 
-  const handleScroll = () => {
-    const bunsTop = bunsRef.current.getBoundingClientRect().top;
-    const saucesTop = saucesRef.current.getBoundingClientRect().top;
-    const fillingsTop = fillingsRef.current.getBoundingClientRect().top;
+  const { buns, sauces, fillings } = useMemo(() => {
+    const buns = ingredientsList.filter(item => item.type === 'bun');
+    const sauces = ingredientsList.filter(item => item.type === 'sauce');
+    const fillings = ingredientsList.filter(item => item.type === 'main');
+    return { buns, sauces, fillings };
+  }, [ingredientsList]);
 
-    if (bunsTop >= 0 && bunsTop < window.innerHeight) {
-      setCurrent('one');
-    } else if (saucesTop >= 0 && saucesTop < window.innerHeight) {
-      setCurrent('two');
-    } else if (fillingsTop >= 0 && fillingsTop < window.innerHeight) {
-      setCurrent('three');
-    }
-  };
+  const {
+    current,
+    bunsRef,
+    saucesRef,
+    fillingsRef,
+    handleTabClick,
+  } = useScrollTabs();
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [detail, setDetail] = useState(null)
 
   const handleOrderClick = (item) => {
+    dispatch(addCurrentIngredient(item))
     openModal()
-    setDetail(item)
   };
 
 
@@ -83,29 +55,29 @@ const BurgerIngredients = ({ ingredients }) => {
             <Tab value="three" active={current === 'three'} onClick={() => handleTabClick('three')}>Начинки</Tab>
           </div>
         </div>
-        <div className={styles.ingridients}>
-          <p ref={bunsRef} className="text text_type_main-medium">
+        <div className={styles.ingridients} id="ingredients-container">
+          <p id="one" ref={bunsRef} className="text text_type_main-medium">
             Булки
           </p>
           <div className={styles.column}>
             {buns.map(item => (
-              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
+              <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
-          <p ref={saucesRef} className="text text_type_main-medium">
+          <p id="two" ref={saucesRef} className="text text_type_main-medium">
             Соусы
           </p>
           <div className={styles.column}>
             {sauces.map(item => (
-              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
+              <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
-          <p ref={fillingsRef} className="text text_type_main-medium">
+          <p id="three" ref={fillingsRef} className="text text_type_main-medium">
             Начинки
           </p>
           <div className={styles.column}>
             {fillings.map(item => (
-              <IngridientCard key={item._id} item={item} onOpen={() => handleOrderClick(item)} />
+              <IngridientCard key={`ingredients_${item._id}`} item={item} onOpen={() => handleOrderClick(item)} />
             ))}
           </div>
         </div>
@@ -113,15 +85,11 @@ const BurgerIngredients = ({ ingredients }) => {
 
       {isModalOpen && (
         <Modal onClose={closeModal} headerText="Детали ингредиента">
-          <IngredientDetails detail={detail} />
+          <IngredientDetails />
         </Modal>
       )}
     </div>
   )
 }
 
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-};
-
-export default BurgerIngredients
+export default React.memo(BurgerIngredients)

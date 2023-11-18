@@ -1,43 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import styles from './app.module.css'
+import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from '../../pages/main-page';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
-  const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
-  const [ingredients, setIngredients] = useState([]);
-
-  useEffect(() => {
-    fetch(API_URL)
-      .then(response => {
-        if (!response.ok) {
-          return Promise.reject(`Ошибка ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        setIngredients(data.data);
-      })
-      .catch(error => {
-        console.error('Ошибка: ', error);
-      });
-  }, []);
-
 
   return (
-    <BrowserRouter>
-      <div className={styles.main}>
-        <AppHeader />
-        <main className={styles.articleContainer}>
-          <Routes>
-            <Route path="/" element={
-              <MainPage ingredients={ingredients}/>
-            } />
-          </Routes>
-        </main>
-      </div>
-    </BrowserRouter>
+    <div className={styles.main}>
+      <AppHeader />
+      <main className={styles.articleContainer}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
+      </main>
+    </div>
   );
 }
 
