@@ -43,7 +43,7 @@ const RegisterPage = () => {
           <InputComponent placeholder={'E-mail'} value={email} onChange={handleEmailChange} />
           <PasswordComponent placeholder={"Пароль"} value={password} onChange={handlePasswordChange} />
           <div className={styles.register_block_btn}>
-            <Button htmlType="button" type="primary" size="large" onClick={handleSubmit}>
+            <Button htmlType="button" type="primary" size="large" onClick={handleSubmit} disabled={!name || !email || !password}>
               Зарегистрироваться
             </Button>
           </div>

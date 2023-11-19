@@ -3,9 +3,17 @@ import styles from './profile-page.module.css'
 import { Routes, Route, NavLink } from 'react-router-dom'
 import ProfileContent from '../components/profile-content/profile-content'
 import OrderHistory from '../components/order-history/order-history'
+import Cookies from 'js-cookie'
+import { logoutUser } from '../services/actions/user'
+import { useDispatch } from 'react-redux'
 
 const ProfilePage = () => {
-  
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    const refreshToken = Cookies.get('refreshToken');
+    dispatch(logoutUser(refreshToken))
+  };
   return (
     <div className={styles.profile_page}>
       <div className={styles.navigation_block}>
@@ -29,14 +37,14 @@ const ProfilePage = () => {
               История заказов
             </p>
           </NavLink>
-          <NavLink
-            to="/logout"
-            className={styles.link}
+          <div
+            className={styles.exit}
+            onClick={handleLogout}
           >
             <p className="text text_type_main-medium">
               Выход
             </p>
-          </NavLink>
+          </div>
         </nav>
         <div className={styles.info}>
           <p className="text text_type_main-default">

@@ -7,26 +7,32 @@ import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-co
 import { useModal } from '../../hooks/useModal'
 import { createOrder } from '../../services/actions/order'
 import { useDispatch, useSelector } from 'react-redux'
-
-
+import { useNavigate } from 'react-router-dom'
+import { saveRedirectPath } from '../../services/actions/user'
 
 const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
-
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const { constructorIngredients } = useSelector(store => store.burger_constructor);
   const { order } = useSelector(store => store.order);
+  const { token } = useSelector(store => store.user);
+
 
   const { bun, notBuns, disabled, totalPrice } = useMemo(() => {
-    const bun = constructorIngredients.find(ingredient => ingredient.type === 'bun') 
+    const bun = constructorIngredients.find(ingredient => ingredient.type === 'bun')
     const notBuns = constructorIngredients.filter(ingredient => ingredient.type !== 'bun')
-    const disabled = constructorIngredients.length === 0 || !bun  
+    const disabled = constructorIngredients.length === 0 || !bun
     const totalPrice = constructorIngredients.reduce((total, item) => total + item.price, 0);
     return { bun, notBuns, disabled, totalPrice }
   }, [constructorIngredients]);
 
   const handleOrder = () => {
+    if (!token) {
+      dispatch(saveRedirectPath('/'))
+      return navigate('/login')
+    }
     if (!disabled) {
       const ingredientsIds = [bun._id, ...notBuns.map(ingredient => ingredient._id), bun._id];
       dispatch(createOrder(ingredientsIds));

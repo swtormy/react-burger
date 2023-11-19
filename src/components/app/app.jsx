@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import MainPage from '../../pages/main-page'
 import NotFoundPage from '../../pages/not-found-page'
 import LoginPage from '../../pages/login-page';
@@ -10,20 +10,21 @@ import ForgotPasswordPage from '../../pages/forgot-password-page';
 import ResetPasswordPage from '../../pages/reset-password-page';
 import ProfilePage from '../../pages/profile-page';
 import IngredientPage from '../../pages/ingredient-page';
-import ProtectedRouteElement from '../../components/private-route/protected-route-element'
-import PublicRouteElement from '../../components/public-route/public-route-element'
+import ProtectedRouteElement from '../../components/private-route/protected-route-element';
+import PublicRouteElement from '../../components/public-route/public-route-element';
+import { useLocation } from 'react-router-dom';
 
 function App() {
-
+  const location = useLocation();
+  const previousLocation = location.state?.previousLocation;
   return (
-    <BrowserRouter>
       <div className={styles.main}>
         <AppHeader />
         <main className={styles.articleContainer}>
-          <Routes>
+          <Routes location={previousLocation || location}>
             <Route path="/" element={<MainPage />} />
-            <Route path="/ingredient" element={<IngredientPage />} />
             <Route path="*" element={<NotFoundPage />} />
+            {!previousLocation && <Route path="/ingredients/:id" element={<IngredientPage modal={false}/>} />}
             <Route element={<PublicRouteElement />}>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
@@ -34,9 +35,15 @@ function App() {
               <Route path="/profile/*" element={<ProfilePage />} />
             </Route>
           </Routes>
+
+          {previousLocation && (
+            <Routes>
+              <Route path="/ingredients/:id" element={<IngredientPage modal={true}/>} />
+            </Routes>
+          )}
         </main>
       </div>
-    </BrowserRouter>
+
   );
 }
 

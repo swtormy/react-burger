@@ -40,3 +40,15 @@
     flex-direction: column;
     width: 480px;
 }
+
+.exit {
+    height: 64px;
+    text-decoration: none;
+    color: #8585AD;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.exit:hover {
+    color: #F2F2F3;
+}

@@ -11,7 +11,6 @@ const ProtectedRouteElement = () => {
     
     useEffect(() => {
         dispatch(checkAuthentication());
-        console.log("Проверено");
     }, [dispatch]);
     
 

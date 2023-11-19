@@ -2,14 +2,15 @@ import React, { useEffect, useMemo } from 'react'
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngridientCard from './ingridient-card/ingridient-card';
-import Modal from '../modal/modal';
-import IngredientDetails from '../modal/modal-children/ingredient-details'
 import { useModal } from '../../hooks/useModal'
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients, addCurrentIngredient } from '../../services/actions/ingredients';
 import useScrollTabs from '../../hooks/useScrollTabs'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const BurgerIngredients = () => {
+  const location = useLocation()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { ingredientsList } = useSelector(state => state.ingredients);
 
@@ -33,11 +34,13 @@ const BurgerIngredients = () => {
   } = useScrollTabs();
 
 
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const { openModal } = useModal();
 
   const handleOrderClick = (item) => {
-    dispatch(addCurrentIngredient(item))
-    openModal()
+    
+    dispatch(addCurrentIngredient(item));
+    navigate(`/ingredients/${item._id}`, { state: { previousLocation: location } });
+    openModal();
   };
 
 
@@ -83,11 +86,6 @@ const BurgerIngredients = () => {
         </div>
       </div>
 
-      {isModalOpen && (
-        <Modal onClose={closeModal} headerText="Детали ингредиента">
-          <IngredientDetails />
-        </Modal>
-      )}
     </div>
   )
 }

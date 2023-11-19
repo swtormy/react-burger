@@ -46,7 +46,7 @@ const LoginPage = () => {
           <InputComponent placeholder={'E-mail'} value={email} onChange={handleEmailChange} />
           <PasswordComponent placeholder={"Пароль"} value={password} onChange={handlePasswordChange} />
           <div className={styles.login_block_btn}>
-            <Button htmlType="button" type="primary" size="large" onClick={handleSubmit}>
+            <Button htmlType="button" type="primary" size="large" onClick={handleSubmit} disabled={!email || !password}>
               Войти
             </Button>
           </div>
