@@ -4,3 +4,8 @@
     width: 100%;
     gap: 24px;
 }
+
+.btns {
+    display: flex;
+    justify-content: end;
+}

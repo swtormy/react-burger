@@ -8,7 +8,7 @@ const PasswordComponent = ({value, onChange, placeholder, icon}) => {
         <PasswordInput
             onChange={onChange}
             value={value}
-            name={"Пароль"}
+            name={"password"}
             placeholder={placeholder}
             extraClass="mb-2"
             icon={icon ? icon : "ShowIcon"}

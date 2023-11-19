@@ -55,6 +55,28 @@ export const submitNewPassword = (password, token) => request("password-reset/re
     }),
 });
 
+export const fetchUserProfile = () => {
+    const token = Cookies.get('accessToken');
+    return request('auth/user', {
+        method: 'GET',
+        headers: {
+            'Authorization': token
+        }
+    })
+};
+
+export const updateUserProfile = (userData) => {
+    const token = Cookies.get('accessToken');
+    return request('auth/user', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(userData)
+    })
+};
+
 export const logIn = (userData) => request('auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -78,25 +100,3 @@ export const register = (userData) => request('auth/register', {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData)
 })
-
-export const fetchUserProfile = () => {
-    const token = Cookies.get('accessToken');
-    return fetch('https://norma.nomoreparties.space/api/auth/user', {
-        method: 'GET',
-        headers: {
-            'Authorization': token
-        }
-    }).then(response => response.json());
-};
-
-export const updateUserProfile = (userData) => {
-    const token = Cookies.get('accessToken');
-    return fetch('https://norma.nomoreparties.space/api/auth/user', {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
-        },
-        body: JSON.stringify(userData)
-    }).then(response => response.json());
-};

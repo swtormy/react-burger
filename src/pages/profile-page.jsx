@@ -5,6 +5,7 @@ import ProfileContent from '../components/profile-content/profile-content'
 import OrderHistory from '../components/order-history/order-history'
 
 const ProfilePage = () => {
+  
   return (
     <div className={styles.profile_page}>
       <div className={styles.navigation_block}>
