@@ -52,3 +52,27 @@ export const submitNewPassword = (password, token) => request("password-reset/re
         token
     }),
 });
+
+export const logIn = (userData) => request('auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+})
+
+export const logOut = (refreshToken) => request('auth/logout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: refreshToken })
+})
+
+export const refresh = (refreshToken) => request('auth/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: refreshToken })
+})
+
+export const register = (userData) => request('auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+})

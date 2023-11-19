@@ -29,7 +29,7 @@ const ProfilePage = () => {
             </p>
           </NavLink>
           <NavLink
-            to="/exit"
+            to="/logout"
             className={styles.link}
           >
             <p className="text text_type_main-medium">
