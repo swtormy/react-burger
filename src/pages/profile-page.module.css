@@ -5,17 +5,26 @@
     gap: 60px;
 }
 
-.navigation {
+.navigation_block {
     display: flex;
     flex-direction: column;
     width: 320px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+}
+
+.info {
+    color: #8585AD;
 }
 
 .link {
     height: 64px;
     text-decoration: none;
     color: #8585AD;
-    transition: color 0.3s ease; 
+    transition: color 0.3s ease;
 }
 
 .active_link {

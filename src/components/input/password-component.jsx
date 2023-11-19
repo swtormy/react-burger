@@ -2,7 +2,7 @@ import React from 'react'
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
 
-const PasswordComponent = ({value, onChange, placeholder}) => {
+const PasswordComponent = ({value, onChange, placeholder, icon}) => {
     
     return (
         <PasswordInput
@@ -11,6 +11,7 @@ const PasswordComponent = ({value, onChange, placeholder}) => {
             name={"Пароль"}
             placeholder={placeholder}
             extraClass="mb-2"
+            icon={icon ? icon : "ShowIcon"}
         />
     )
 }
@@ -18,7 +19,8 @@ const PasswordComponent = ({value, onChange, placeholder}) => {
 PasswordComponent.propTypes = {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string.isRequired
+    placeholder: PropTypes.string.isRequired,
+    icon: PropTypes.string
 }
 
 export default PasswordComponent
