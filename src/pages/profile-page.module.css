@@ -1,0 +1,33 @@
+.profile_page {
+    display: flex;
+    width: 100%;
+    padding: 120px 20px 0px 20px;
+    gap: 60px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+}
+
+.link {
+    height: 64px;
+    text-decoration: none;
+    color: #8585AD;
+    transition: color 0.3s ease; 
+}
+
+.active_link {
+    color: #F2F2F3;
+}
+
+.link:hover {
+    color: #F2F2F3;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+}

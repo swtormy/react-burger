@@ -25,6 +25,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/orders" element={<ProfilePage />} />
             <Route path="/ingredient" element={<IngredientPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
