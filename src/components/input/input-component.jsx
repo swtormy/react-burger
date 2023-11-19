@@ -29,7 +29,8 @@ const InputComponent = ({ placeholder, value, icon, onChange }) => {
 InputComponent.propTypes = {
     placeholder: PropTypes.string.isRequired,
     value: PropTypes.string,
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    onChange: PropTypes.func
 }
 
 export default InputComponent

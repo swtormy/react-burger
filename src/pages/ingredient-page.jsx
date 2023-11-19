@@ -6,6 +6,7 @@ import { getIngredients } from '../utils/burger-api';
 import { useDispatch } from 'react-redux';
 import { addCurrentIngredient } from '../services/actions/ingredients';
 import styles from './ingredient-page.module.css';
+import PropTypes from 'prop-types';
 
 const IngredientPage = ({ modal }) => {
   let { id } = useParams();
@@ -32,6 +33,10 @@ const IngredientPage = ({ modal }) => {
     </div>
   </div>
 
+}
+
+IngredientPage.propTypes = {
+  modal: PropTypes.bool,
 }
 
 export default IngredientPage

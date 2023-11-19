@@ -6,16 +6,20 @@ import { saveRedirectPath, checkAuthentication } from '../../services/actions/us
 
 const ProtectedRouteElement = () => {
     const token = useSelector(state => state.user.token);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const location = useLocation();
-    
+
     useEffect(() => {
         dispatch(checkAuthentication());
     }, [dispatch]);
-    
+
+    useEffect(() => {
+        if (!token) {
+            dispatch(saveRedirectPath(location.pathname));
+        }
+    }, [token, dispatch, location.pathname]);
 
     if (!token) {
-        dispatch(saveRedirectPath(location.pathname));
         return <Navigate to="/login" />;
     }
 
