@@ -31,3 +31,24 @@ export const createOrder = (ingredientIds) => request("orders", {
         ingredients: ingredientIds,
     }),
 });
+
+export const resetPassword = (email) => request("password-reset", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        email
+    }),
+});
+
+export const submitNewPassword = (password, token) => request("password-reset/reset", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        password,
+        token
+    }),
+});

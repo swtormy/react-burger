@@ -16,6 +16,7 @@ const AppHeader = () => {
                 </div>
                 <NavigationLink
                     board={board}
+                    href="/profile"
                     setBoard={setBoard}
                     icon={<ProfileIcon type={board === 'Личный кабинет' ? "primary" : "secondary"} />}
                     name={'Личный кабинет'}

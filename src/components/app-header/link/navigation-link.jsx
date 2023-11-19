@@ -1,13 +1,14 @@
 import React from 'react'
-import styles from '../app-header.module.css'
+import styles from './navigation-link.module.css'
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const NavigationLink = ({ icon, name, style, href, board, setBoard }) => {
     const isActive = board === name;
     const linkStyles = isActive ? { color: '#F2F2F3', fill: '#F2F2F3' } : {};
     return (
-        <a
-            href={href}
+        <Link
+            to={href}
             style={{ ...style, ...linkStyles }}
             className={styles.link}
             onClick={() => setBoard(name)}
@@ -18,14 +19,14 @@ const NavigationLink = ({ icon, name, style, href, board, setBoard }) => {
                     {name}
                 </p>
             </div>
-        </a>
+        </Link>
     );
 }
 NavigationLink.propTypes = {
     icon: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired,
     style: PropTypes.object,
-    href: PropTypes.string,
+    href: PropTypes.string.isRequired,
     board: PropTypes.string.isRequired,
     setBoard: PropTypes.func.isRequired,
 }

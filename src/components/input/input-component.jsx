@@ -2,8 +2,7 @@ import React from 'react'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
 
-const InputComponent = ({ placeholder, value_string, icon }) => {
-    const [value, setValue] = React.useState(value_string)
+const InputComponent = ({ placeholder, value, icon, onChange }) => {
     const inputRef = React.useRef(null)
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
@@ -13,7 +12,7 @@ const InputComponent = ({ placeholder, value_string, icon }) => {
         <Input
             type={'text'}
             placeholder={placeholder}
-            onChange={e => setValue(e.target.value)}
+            onChange={onChange}
             icon={icon}
             value={value}
             name={'name'}
@@ -29,7 +28,7 @@ const InputComponent = ({ placeholder, value_string, icon }) => {
 
 InputComponent.propTypes = {
     placeholder: PropTypes.string.isRequired,
-    value_string: PropTypes.string,
+    value: PropTypes.string,
     icon: PropTypes.string
 }
 
