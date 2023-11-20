@@ -7,25 +7,18 @@ import PasswordComponent from '../components/input/password-component'
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../services/actions/user';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from '../hooks/useForm'
 
 const LoginPage = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const { values, handleChange } = useForm({ email: '', password: '' });
 
   const redirectPath = useSelector(state => state.user.redirectPath);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    const userData = { email, password };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userData = { email: values.email, password: values.password };
     dispatch(loginUser(userData)).then(() => {
       if (redirectPath) {
         navigate(redirectPath);
@@ -37,20 +30,22 @@ const LoginPage = () => {
   return (
     <div className={styles.login_page}>
       <div className={styles.login_block}>
-        <div className={styles.inputs_block}>
-          <div className={styles.login_block_title}>
-            <p className="text text_type_main-medium">
-              Вход
-            </p>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.inputs_block}>
+            <div className={styles.login_block_title}>
+              <p className="text text_type_main-medium">
+                Вход
+              </p>
+            </div>
+            <InputComponent placeholder={'E-mail'} name={"email"} value={values.email} onChange={handleChange} />
+            <PasswordComponent placeholder={"Пароль"}  value={values.password} onChange={handleChange} />
+            <div className={styles.login_block_btn}>
+              <Button htmlType="submit" type="primary" size="large" disabled={!values.email || !values.password}>
+                Войти
+              </Button>
+            </div>
           </div>
-          <InputComponent placeholder={'E-mail'} value={email} onChange={handleEmailChange} />
-          <PasswordComponent placeholder={"Пароль"} value={password} onChange={handlePasswordChange} />
-          <div className={styles.login_block_btn}>
-            <Button htmlType="button" type="primary" size="large" onClick={handleSubmit} disabled={!email || !password}>
-              Войти
-            </Button>
-          </div>
-        </div>
+        </form>
         <div className={styles.links_block}>
           <p className={["text text_type_main-default", styles.text].join(" ")}>
             Вы - новый пользователь?{' '}

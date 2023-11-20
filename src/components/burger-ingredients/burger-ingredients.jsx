@@ -14,9 +14,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
   const { ingredientsList } = useSelector(state => state.ingredients);
 
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
+
 
   const { buns, sauces, fillings } = useMemo(() => {
     const buns = ingredientsList.filter(item => item.type === 'bun');

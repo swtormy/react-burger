@@ -8,7 +8,7 @@ import {
 
 const initialState = {
     ingredientsList: [],
-    currentIngredient: null,
+    currentIngredient: localStorage.getItem("currentIngredient") ? JSON.parse(localStorage.getItem("currentIngredient")) : null,
     isLoading: false,
     error: null,
 };

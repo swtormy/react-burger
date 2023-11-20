@@ -10,7 +10,8 @@ import { useDispatch } from 'react-redux'
 const ProfilePage = () => {
   const dispatch = useDispatch()
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     const refreshToken = Cookies.get('refreshToken');
     dispatch(logoutUser(refreshToken))
   };

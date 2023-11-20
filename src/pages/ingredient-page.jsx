@@ -2,24 +2,22 @@ import React, { useEffect } from 'react';
 import Modal from '../components/modal/modal';
 import IngredientDetails from '../components/modal/modal-children/ingredient-details';
 import { useParams } from 'react-router-dom';
-import { getIngredients } from '../utils/burger-api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addCurrentIngredient } from '../services/actions/ingredients';
 import styles from './ingredient-page.module.css';
 import PropTypes from 'prop-types';
 
 const IngredientPage = ({ modal }) => {
   let { id } = useParams();
+  const { ingredientsList } = useSelector(state => state.ingredients);
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!modal) {
-      getIngredients().then(data => {
-        const foundIngredient = data.data.find((item) => item._id === id);
-        dispatch(addCurrentIngredient(foundIngredient));
-      }).catch(error => console.error(error));
+      const foundIngredient = ingredientsList.find((item) => item._id === id);
+      dispatch(addCurrentIngredient(foundIngredient));
     }
-  }, [id]);
+  }, [id, dispatch, ingredientsList, modal]);
 
   if (modal) return <Modal headerText="Детали ингредиента" isRoute={true}>
     <IngredientDetails />

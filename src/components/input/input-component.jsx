@@ -2,7 +2,7 @@ import React from 'react'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
 
-const InputComponent = ({ placeholder, value, icon, onChange }) => {
+const InputComponent = ({ placeholder, name, value, icon, onChange }) => {
     const inputRef = React.useRef(null)
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
@@ -15,7 +15,7 @@ const InputComponent = ({ placeholder, value, icon, onChange }) => {
             onChange={onChange}
             icon={icon}
             value={value}
-            name={'name'}
+            name={name}
             error={false}
             ref={inputRef}
             onIconClick={onIconClick}
@@ -28,6 +28,7 @@ const InputComponent = ({ placeholder, value, icon, onChange }) => {
 
 InputComponent.propTypes = {
     placeholder: PropTypes.string.isRequired,
+    name: PropTypes.string,
     value: PropTypes.string,
     icon: PropTypes.string,
     onChange: PropTypes.func

@@ -11,7 +11,11 @@ const Modal = ({ children, onClose, headerText, isRoute }) => {
   const modalRoot = document.getElementById('react-modals');
   const handleKeyDown = useCallback((event) => {
     if (event.key === 'Escape') {
-      onClose();
+      if (isRoute) {
+        navigate('/');
+      } else {
+        onClose();
+      }
     }
   }, [onClose]);
 

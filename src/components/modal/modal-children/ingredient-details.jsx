@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './ingridient-details.module.css'
 import { getFileNameFromUrl } from '../../../utils/utils-funcs'
 import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
   const { currentIngredient } = useSelector(state => state.ingredients);
-  if(!currentIngredient) return null
+
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem("currentIngredient");
+    };
+  }, []);
+
+  if (!currentIngredient) return null
   return (
     <div className={styles.detail_inner}>
       <div className={styles.detail_for_center}>

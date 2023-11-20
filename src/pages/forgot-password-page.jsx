@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styles from './forgot-password-page.module.css'
 import InputComponent from '../components/input/input-component'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -7,9 +7,10 @@ import { resetPassword } from '../utils/burger-api'
 import { useDispatch } from 'react-redux';
 import { allowResetPasswordAccess } from '../services/actions/user'
 import { useNavigate } from 'react-router-dom';
+import { useForm } from '../hooks/useForm'
 
 const ForgotPasswordPage = () => {
-    const [email, setEmail] = useState('');
+    const { values, handleChange } = useForm({ email: '' });
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -18,37 +19,35 @@ const ForgotPasswordPage = () => {
         dispatch(allowResetPasswordAccess());
     }, [dispatch])
 
-    const handleResetPassword = async () => {
-        try {
-            const response = await resetPassword(email);
-            if (response.success) {
-                navigate('/reset-password')
-            }
-        } catch (error) {
-            console.log('Ошибка:', error);
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await resetPassword(values.email);
+        navigate('/reset-password')
     };
 
     return (
         <div className={styles.forgot_page}>
             <div className={styles.forgot_block}>
-                <div className={styles.inputs_block}>
-                    <div className={styles.forgot_block_title}>
-                        <p className="text text_type_main-medium">
-                            Восстановление пароля
-                        </p>
+                <form onSubmit={handleSubmit}>
+                    <div className={styles.inputs_block}>
+                        <div className={styles.forgot_block_title}>
+                            <p className="text text_type_main-medium">
+                                Восстановление пароля
+                            </p>
+                        </div>
+                        <InputComponent
+                            placeholder={'Укажите e-mail'}
+                            name={'email'}
+                            value={values.email}
+                            onChange={handleChange}
+                        />
+                        <div className={styles.forgot_block_btn}>
+                            <Button htmlType="submit" type="primary" size="large" disabled={!values.email}>
+                                Восстановить
+                            </Button>
+                        </div>
                     </div>
-                    <InputComponent
-                        placeholder={'Укажите e-mail'}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <div className={styles.forgot_block_btn}>
-                        <Button htmlType="button" type="primary" size="large" onClick={handleResetPassword} disabled={!email}>
-                            Восстановить
-                        </Button>
-                    </div>
-                </div>
+                </form>
                 <div className={styles.links_block}>
                     <p className={["text text_type_main-default", styles.text].join(" ")}>
                         Вспомнили пароль?{' '}
