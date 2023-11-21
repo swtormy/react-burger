@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCurrentIngredient } from '../services/actions/ingredients';
 import styles from './ingredient-page.module.css';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const IngredientPage = ({ modal }) => {
   let { id } = useParams();
   const { ingredientsList } = useSelector(state => state.ingredients);
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   useEffect(() => {
     if (!modal) {
       const foundIngredient = ingredientsList.find((item) => item._id === id);
@@ -19,7 +20,7 @@ const IngredientPage = ({ modal }) => {
     }
   }, [id, dispatch, ingredientsList, modal]);
 
-  if (modal) return <Modal headerText="Детали ингредиента" isRoute={true}>
+  if (modal) return <Modal headerText="Детали ингредиента" onClose={() => navigate("/")}>
     <IngredientDetails />
   </Modal>
   return <div className={styles.ingredient_in_page}>

@@ -35,18 +35,14 @@ export const allowResetPasswordAccess = () => {
 export const loginUser = (userData) => {
     return (dispatch) => {
         return logIn(userData).then(response => {
-            if (response.success) {
-                dispatch({
-                    type: LOGIN_SUCCESS,
-                    payload: {
-                        user: response.user,
-                        accessToken: response.accessToken,
-                        refreshToken: response.refreshToken
-                    }
-                });
-            } else {
-                dispatch({ type: LOGOUT_SUCCESS, payload: response });
-            }
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: {
+                    user: response.user,
+                    accessToken: response.accessToken,
+                    refreshToken: response.refreshToken
+                }
+            });
         }).catch(error => {
             dispatch({ type: LOGOUT_SUCCESS, payload: error });
         });

@@ -4,6 +4,7 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import NavigationMenu from './navigation/navigation-menu'
 import NavigationLink from './link/navigation-link'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Link } from 'react-router-dom'
 
 const AppHeader = () => {
     const [board, setBoard] = useState("Конструктор")
@@ -12,7 +13,9 @@ const AppHeader = () => {
             <div className={styles.header_container}>
                 <NavigationMenu board={board} setBoard={setBoard} />
                 <div className={styles.logo}>
-                    <Logo />
+                    <Link to="/">
+                        <Logo />
+                    </Link>
                 </div>
                 <NavigationLink
                     board={board}

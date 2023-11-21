@@ -8,12 +8,16 @@
     background: #1C1C21;
 }
 
-.logo{
+.logo {
     position: absolute;
     display: flex;
     width: 100%;
     left: 0;
     justify-content: center;
+}
+
+.logo_btn {
+    cursor: pointer;
 }
 
 .header_container {

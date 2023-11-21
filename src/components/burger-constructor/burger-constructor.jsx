@@ -16,7 +16,7 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const { constructorIngredients } = useSelector(store => store.burger_constructor);
-  const { order } = useSelector(store => store.order);
+  const { isLoading, order } = useSelector(store => store.order);
   const { token } = useSelector(store => store.user);
 
 
@@ -42,10 +42,10 @@ const BurgerConstructor = () => {
   };
 
   useEffect(() => {
-    if (order) {
-      openModal(order)
-    }
-  }, [order, openModal])
+    if (isLoading || order) {
+      openModal();
+    } 
+  }, [isLoading, order, openModal]);
 
 
   return (
@@ -68,10 +68,15 @@ const BurgerConstructor = () => {
           </div>
         </div>
       </div>
-
-      {isModalOpen && <Modal onClose={closeModal}>
-        <OrderDetails />
-      </Modal>}
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          {isLoading ? (
+            <div>Загрузка...</div> 
+          ) : (
+            <OrderDetails /> 
+          )}
+        </Modal>
+      )}
     </div>
   )
 }
