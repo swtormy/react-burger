@@ -7,11 +7,11 @@ import ModalOverlay from './modal-overlay';
 
 
 const Modal = ({ children, onClose, headerText }) => {
-  const modalRoot = document.getElementById('react-modals');
 
+  const modalRoot = document.getElementById('react-modals');
   const handleKeyDown = useCallback((event) => {
     if (event.key === 'Escape') {
-      onClose();
+      onClose()
     }
   }, [onClose]);
 
@@ -26,7 +26,7 @@ const Modal = ({ children, onClose, headerText }) => {
     (
       <>
         <ModalOverlay onClose={onClose} />
-        <div className={styles.modal}>
+        <div className={styles.modal} onClick={e => e.stopPropagation()}>
           <div className={styles.modal_header_row}>
             <p className="text text_type_main-large">
               {headerText}
@@ -43,8 +43,8 @@ const Modal = ({ children, onClose, headerText }) => {
 
 Modal.propTypes = {
   children: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
-  headerText: PropTypes.string
+  onClose: PropTypes.func,
+  headerText: PropTypes.string,
 }
 
 export default Modal;

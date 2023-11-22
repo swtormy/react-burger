@@ -2,6 +2,7 @@ import {
     ADD_BUNS,
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
+    REMOVE_ALL_INGREDIENTS,
     UPDATE_ORDER_INDEX
 } from '../actions/constructor'
 
@@ -29,6 +30,11 @@ export default function constructorReducer(state = initialState, action) {
             };
         }
 
+        case REMOVE_ALL_INGREDIENTS:
+            return {
+                ...state,
+                constructorIngredients: []
+            };
         case REMOVE_INGREDIENT:
             const newIngredientsList = state.constructorIngredients.filter(
                 ingredient => ingredient.instanceId !== action.payload

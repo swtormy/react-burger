@@ -33,6 +33,7 @@ export const getIngredients = () => {
 };
 
 export const addCurrentIngredient = (ingredient) => {
+    localStorage.setItem("currentIngredient", JSON.stringify(ingredient))
     return {
         type: ADD_CURRENT_INGREDIENT,
         payload: ingredient,

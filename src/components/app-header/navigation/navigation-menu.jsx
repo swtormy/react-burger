@@ -1,19 +1,20 @@
 import React from 'react'
-import styles from '../app-header.module.css';
+import styles from './navigation-menu.module.css';
 import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import NavigationLink from '../link/navigation-link';
-import PropTypes from 'prop-types';
 
 
-const NavigationMenu = ({ board, setBoard }) => {
+const NavigationMenu = () => {
     const links = [
         {
             name: 'Конструктор',
-            icon: <BurgerIcon type={board === 'Конструктор' ? "primary" : "secondary"} />
+            href: "/",
+            icon: <BurgerIcon type={"secondary"} />
         },
         {
             name: 'Лента заказов',
-            icon: <ListIcon type={board === 'Лента заказов' ? "primary" : "secondary"} />
+            href: "orders",
+            icon: <ListIcon type={"secondary"} />
         }
     ]
     return (
@@ -21,20 +22,14 @@ const NavigationMenu = ({ board, setBoard }) => {
             {links.map((link, index) => (
                 <NavigationLink
                     key={index}
-                    board={board}
-                    setBoard={setBoard}
+                    href={link.href}
                     icon={link.icon}
                     name={link.name}
-                    style={index > 0 ? { marginLeft: '8px' } : {}}
                 />
             ))}
         </div>
     )
 }
 
-NavigationMenu.propTypes = {
-    board: PropTypes.string.isRequired,
-    setBoard: PropTypes.func.isRequired,
-}
 
 export default NavigationMenu

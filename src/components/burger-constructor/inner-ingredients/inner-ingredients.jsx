@@ -6,7 +6,7 @@ import DraggableElement from '../draggable-element/draggable-element'
 import { useDrop } from "react-dnd";
 import { updateOrderIndex } from '../../../services/actions/constructor'
 import { getHovIndex } from '../../../utils/utils-funcs'
-
+import { v4 as uuidv4 } from 'uuid'
 
 const InnerIngredients = () => {
 
@@ -49,8 +49,8 @@ const InnerIngredients = () => {
     return (
         <div ref={drop} className={styles.inner_ings}>
             {otherIngredients?.map((ing, index) => (
-                <div key={ing.instanceId} ref={el => itemRefs.current[index] = el} data-id={ing.instanceId} className={styles.inner_ings}>
-                    <DraggableElement key={ing.instanceId + "drag_el"} isHover={hoveredId === ing.orderIndex} ing={ing} handleDeleteItem={handleDeleteItem} setHoveredId={setHoveredId} />
+                <div key={uuidv4()} ref={el => itemRefs.current[index] = el} data-id={ing.instanceId}>
+                    <DraggableElement key={uuidv4()} isHover={hoveredId === ing.orderIndex} ing={ing} handleDeleteItem={handleDeleteItem} setHoveredId={setHoveredId} />
                 </div>
             ))}
         </div>

@@ -1,5 +1,5 @@
 import { createOrder as fetchOrder } from '../../utils/burger-api';
-
+import { removeAllIngredients } from './constructor'
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -19,6 +19,7 @@ export const createOrder = (ids) => {
                     type: GET_ORDER_SUCCESS,
                     payload: data.order.number,
                 });
+                dispatch(removeAllIngredients())
             })
             .catch(error => {
                 dispatch({

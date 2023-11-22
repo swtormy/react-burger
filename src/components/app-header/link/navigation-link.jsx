@@ -1,16 +1,14 @@
 import React from 'react'
-import styles from '../app-header.module.css'
+import styles from './navigation-link.module.css'
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
-const NavigationLink = ({ icon, name, style, href, board, setBoard }) => {
-    const isActive = board === name;
-    const linkStyles = isActive ? { color: '#F2F2F3', fill: '#F2F2F3' } : {};
+const NavigationLink = ({ icon, name, href }) => {
+
     return (
-        <a
-            href={href}
-            style={{ ...style, ...linkStyles }}
-            className={styles.link}
-            onClick={() => setBoard(name)}
+        <NavLink
+            to={href}
+            className={(navData) => navData.isActive ? [styles.link, styles.active_link].join(" ") : styles.link}
         >
             <div className={styles.link__inner}>
                 {icon}
@@ -18,15 +16,12 @@ const NavigationLink = ({ icon, name, style, href, board, setBoard }) => {
                     {name}
                 </p>
             </div>
-        </a>
+        </NavLink>
     );
 }
 NavigationLink.propTypes = {
     icon: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired,
-    style: PropTypes.object,
-    href: PropTypes.string,
-    board: PropTypes.string.isRequired,
-    setBoard: PropTypes.func.isRequired,
+    href: PropTypes.string.isRequired,
 }
 export default NavigationLink

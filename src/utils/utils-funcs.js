@@ -1,3 +1,5 @@
+import { jwtDecode } from 'jwt-decode';
+
 export function getFileNameFromUrl(url) {
     const regex = /\/([^\/]+)$/;
     const match = url.match(regex);
@@ -18,3 +20,12 @@ export function getHovIndex(monitor, itemRefs) {
             clientOffset.y < boundingRect.bottom;
     });
 }
+
+export function checkTokenExpiry(token) {
+    if (!token) {
+        return false;
+    }
+    const decoded = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    return decoded.exp > currentTime;
+};
