@@ -1,3 +1,4 @@
+import { BurgerActions, ConstructorState } from '../../utils/models';
 import {
     ADD_BUNS,
     ADD_INGREDIENT,
@@ -7,11 +8,11 @@ import {
 } from '../actions/constructor'
 
 
-const initialState = {
+const initialState: ConstructorState = {
     constructorIngredients: []
 };
 
-export default function constructorReducer(state = initialState, action) {
+export default function constructorReducer(state: ConstructorState = initialState, action: BurgerActions) {
 
     switch (action.type) {
         case ADD_INGREDIENT: {
@@ -53,10 +54,10 @@ export default function constructorReducer(state = initialState, action) {
                 oldOrderIngredient.orderIndex = newIndex;
                 newOrderIngredient.orderIndex = oldIndex;
             }
-            
+
             return {
                 ...state,
-                constructorIngredients: updatedConstructorIngredients.toSorted((a, b) => a.orderIndex - b.orderIndex)
+                constructorIngredients: updatedConstructorIngredients.toSorted((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0))
             };
         }
         default:

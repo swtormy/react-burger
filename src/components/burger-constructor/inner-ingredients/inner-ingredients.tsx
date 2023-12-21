@@ -27,7 +27,9 @@ const InnerIngredients: React.FC<Props> = ({ }) => {
 
 
     const handleDeleteItem = (item: TIngredientExtended) => {
-        dispatch(removeIngredient(item.instanceId));
+        if(item.instanceId){
+            dispatch(removeIngredient(item.instanceId));
+        }
     }
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [_, drop] = useDrop({

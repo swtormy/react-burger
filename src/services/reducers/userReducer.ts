@@ -1,15 +1,16 @@
 import Cookies from 'js-cookie';
 import { SAVE_REDIRECT_PATH, LOGIN_SUCCESS, RESET_PASSWORD_ACCESS, REFRESH_TOKEN_SUCCESS, LOGOUT_SUCCESS } from '../actions/user';
+import { AuthActionTypes, UserState } from '../../utils/models';
 
 
-const initialState = {
-    user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null,
-    token: Cookies.get('accessToken') ? Cookies.get('accessToken') : null,
+const initialState: UserState = {
+    user: Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null,
+    token: Cookies.get('accessToken') ? JSON.parse(Cookies.get('accessToken')!) : null,
     resetPasswordAccess: false,
     redirectPath: null
 };
 
-export default function userReducer(state = initialState, action) {
+export default function userReducer(state: UserState = initialState, action: AuthActionTypes) {
     switch (action.type) {
 
         case SAVE_REDIRECT_PATH:

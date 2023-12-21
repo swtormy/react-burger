@@ -30,7 +30,7 @@ const request = (endpoint: string, options: TRequestOptions = {}): Promise<TResp
 
 export const getIngredients = (): Promise<TResponseData> => request("ingredients");
 
-export const createOrder = (ingredientIds: TIngredientExtended[]): Promise<TResponseData> => request("orders", {
+export const createOrder = (ingredientIds: number[]): Promise<TResponseData> => request("orders", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
