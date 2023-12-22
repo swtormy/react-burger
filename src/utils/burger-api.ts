@@ -66,7 +66,7 @@ export const fetchUserProfile = (): Promise<TResponseData> => {
     return request('auth/user', {
         method: 'GET',
         headers: {
-            'Authorization': token
+            'Authorization': "Bearer " + token
         }
     })
 };
@@ -77,7 +77,7 @@ export const updateUserProfile = (userData: TUserProfileData): Promise<TResponse
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': token
+            'Authorization': "Bearer " + token
         },
         body: JSON.stringify(userData)
     })

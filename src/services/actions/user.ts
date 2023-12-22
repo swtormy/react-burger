@@ -113,7 +113,7 @@ export const logoutUser = (refreshToken : string): ThunkAction<void, RootState, 
 
 export const checkAuthentication = (): ThunkAction<void, RootState, unknown, AuthActionTypes> => (dispatch) => {
     const accessToken = Cookies.get('accessToken');
-    const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null;
+    const user = Cookies.get('user') ? Cookies.get('user') : null;
     const refToken = Cookies.get('refreshToken');
     if (accessToken && checkTokenExpiry(accessToken)) {
         dispatch({

@@ -5,7 +5,7 @@ import { AuthActionTypes, UserState } from '../../utils/models';
 
 const initialState: UserState = {
     user: Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null,
-    token: Cookies.get('accessToken') ? JSON.parse(Cookies.get('accessToken')!) : null,
+    token: Cookies.get('accessToken') ? Cookies.get('accessToken')! : null,
     resetPasswordAccess: false,
     redirectPath: null
 };
@@ -20,7 +20,7 @@ export default function userReducer(state: UserState = initialState, action: Aut
             };
         case LOGIN_SUCCESS:
             Cookies.set('user', JSON.stringify(action.payload.user));
-            Cookies.set('accessToken', action.payload.accessToken);
+            Cookies.set('accessToken', action.payload.accessToken.replace("Bearer ", ""));
             Cookies.set('refreshToken', action.payload.refreshToken);
             return {
                 ...state,
@@ -28,7 +28,7 @@ export default function userReducer(state: UserState = initialState, action: Aut
                 token: action.payload.accessToken,
             };
         case REFRESH_TOKEN_SUCCESS:
-            Cookies.set('accessToken', action.payload.accessToken);
+            Cookies.set('accessToken', action.payload.accessToken.replace("Bearer ", ""));
             Cookies.set('refreshToken', action.payload.refreshToken);
             return {
                 ...state,

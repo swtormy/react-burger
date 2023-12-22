@@ -15,6 +15,8 @@ import PublicRouteElement from '../public-route/public-route-element';
 import { useLocation } from 'react-router-dom';
 import { getIngredients } from '../../services/actions/ingredients'
 import { useAppDispatch } from '../../hooks/redux-hooks';
+import FeedDetailPage from '../../pages/feed-detail-page';
+import FeedPage from '../../pages/feed-page';
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           {!previousLocation && <Route path="/ingredients/:id" element={<IngredientPage modal={false} />} />}
           <Route element={<PublicRouteElement />}>
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/feed/:number" element={<FeedDetailPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
