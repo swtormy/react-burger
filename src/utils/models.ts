@@ -124,11 +124,20 @@ export interface IngredientsState {
 }
 
 
+export interface RemoveCurrentOrderAction {
+    type: typeof REMOVE_CURRENT_ORDER;
+}
+
 export type OrderActionTypes = { type: typeof GET_ORDER_REQUEST }
     | { type: typeof GET_ORDER_SUCCESS; payload: number }
     | { type: typeof GET_ORDER_ERROR; payload: Error }
-    | { type: typeof REMOVE_CURRENT_ORDER } | RemoveIngredientsAction
+    | RemoveCurrentOrderAction | RemoveIngredientsAction
 
+export type OrderState = {
+    order: number | null,
+    isLoading: boolean,
+    error: Error | null,
+}
 
 export interface User {
     email: string;

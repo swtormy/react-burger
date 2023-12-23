@@ -1,6 +1,8 @@
 import React from 'react'
 import styles from './order-component.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { Link } from 'react-router-dom';
 
 type Props = {
     order: any;
@@ -8,8 +10,9 @@ type Props = {
 
 const OrderComponent: React.FC<Props> = ({ order }) => {
     const today = new Date()
+    const ingredients = useAppSelector(store => store.ingredients.ingredientsList)
     return (
-        <div className={styles.order_component}>
+        <Link to={`${order}`} className={styles.order_component}>
             <div className={styles.title}>
                 <p className="text text_type_main-default">
                     #034535
@@ -38,7 +41,13 @@ const OrderComponent: React.FC<Props> = ({ order }) => {
                 <div className={styles.ingredients}>
                     {
                         [1, 2, 3, 4, 5, 6].map(ingr => (
-                            <div key={ingr} className={styles.ingredient}>{ingr === 6 && '+3'}</div>
+                            <div key={ingr} className={styles.ingredient} >
+                                <img src={ingredients[ingr]?.image_mobile ?? "unknown"} />
+                                {ingr === 6 && <span className={styles.ingredientCount}>
+                                    <p className={[styles.ingredientCountText, "text text_type_main-default"].join(' ')}>
+                                        +{ingredients.length - 5}
+                                    </p></span>}
+                            </div>
                         ))
                     }
                 </div>
@@ -49,7 +58,7 @@ const OrderComponent: React.FC<Props> = ({ order }) => {
                     <CurrencyIcon type="primary" />
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

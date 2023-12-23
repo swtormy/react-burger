@@ -1,0 +1,100 @@
+.order_in_page {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 120px;
+}
+
+.order_detail {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.order_number {
+    margin-bottom: 40px;
+}
+
+
+.order_status {
+    text-align: start;
+    color: #00CCCC;
+    margin-bottom: 60px;
+}
+
+.order_composition_title {
+    text-align: start;
+    margin-bottom: 24px;
+}
+
+.order_composition_body{
+    display: flex;
+    flex-direction: column;
+    height: 312px;
+    overflow-y: auto;
+    gap: 16px;
+    padding-right: 24px;
+    margin-bottom: 40px;
+}
+
+.order_ingr{
+    display: flex;
+    gap: 16px;
+    height: 64px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ing_circle {
+    display: flex;
+    width: 58px;
+    height: 58px;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(#1C1C21, #1C1C21) padding-box,
+        linear-gradient(to right, #801AB2, #4C4CFF) border-box;
+    border-radius: 50em;
+    border: 3px solid transparent;
+    position: relative;
+    
+}
+
+.img_in_circle {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+}
+
+.order_desc {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order_name {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.ing_order_price {
+    display: flex;
+    gap: 8px;
+}
+
+.order_price{
+    display: flex;
+    justify-content: space-between;
+}
+
+.price{
+    display: flex;
+    gap: 8px;
+}
+
+.intext_color {
+    text-decoration-line: none !important;
+    color: #8585AD !important;
+}

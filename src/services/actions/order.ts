@@ -2,7 +2,7 @@ import { ThunkAction } from 'redux-thunk';
 import { createOrder as fetchOrder } from '../../utils/burger-api';
 import { removeAllIngredients } from './constructor'
 import { RootState } from '../store';
-import { OrderActionTypes } from '../../utils/models';
+import { OrderActionTypes, RemoveCurrentOrderAction } from '../../utils/models';
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -37,7 +37,7 @@ export const createOrder = (ids: number[]): ThunkAction<void, RootState, unknown
 };
 
 
-export const removeCurrentOrder = () => {
+export const removeCurrentOrder = (): RemoveCurrentOrderAction => {
     return {
         type: REMOVE_CURRENT_ORDER,
     };
