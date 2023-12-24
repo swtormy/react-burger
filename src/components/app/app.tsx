@@ -17,6 +17,7 @@ import { getIngredients } from '../../services/actions/ingredients'
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import FeedDetailPage from '../../pages/feed-detail-page';
 import FeedPage from '../../pages/feed-page';
+import OrderHistoryDetail from '../order-history/order-history-detail';
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           </Route>
           <Route element={<ProtectedRouteElement />}>
             <Route path="/profile/*" element={<ProfilePage />} />
+            <Route path="/profile/orders/:number" element={<OrderHistoryDetail />} />
           </Route>
         </Routes>
 

@@ -38,7 +38,7 @@
 .content {
     display: flex;
     flex-direction: column;
-    width: 480px;
+    width: 100%;
 }
 
 .exit {

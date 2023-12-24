@@ -63,7 +63,6 @@ const ProfilePage: React.FC<Props> = () => {
         <Routes>
           <Route path="" element={<ProfileContent />} />
           <Route path="orders" element={<OrderHistory />} />
-          <Route path="/orders/:number" element={<OrderHistoryDetail />} />
         </Routes>
       </div>
     </div>
