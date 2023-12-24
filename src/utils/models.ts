@@ -1,6 +1,6 @@
 import { ADD_BUNS, ADD_INGREDIENT, REMOVE_ALL_INGREDIENTS, REMOVE_INGREDIENT, UPDATE_ORDER_INDEX } from "../services/actions/constructor";
 import { ADD_CURRENT_INGREDIENT, GET_INGREDIENTS_ERROR, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, REMOVE_CURRENT_INGREDIENT } from "../services/actions/ingredients";
-import { GET_ORDER_ERROR, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REMOVE_CURRENT_ORDER } from "../services/actions/order";
+import { GET_ORDER_ERROR, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REMOVE_CURRENT_ORDER, UPDATE_ORDER_LIST } from "../services/actions/order";
 import { LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_SUCCESS, REFRESH_TOKEN_FAIL, REFRESH_TOKEN_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS, RESET_PASSWORD_ACCESS, SAVE_REDIRECT_PATH } from "../services/actions/user";
 
 export type TIngredientExtended = {
@@ -128,13 +128,30 @@ export interface RemoveCurrentOrderAction {
     type: typeof REMOVE_CURRENT_ORDER;
 }
 
+export interface UpdateOrderListAction {
+    type: typeof UPDATE_ORDER_LIST;
+    payload: Order[];
+}
+
 export type OrderActionTypes = { type: typeof GET_ORDER_REQUEST }
     | { type: typeof GET_ORDER_SUCCESS; payload: number }
     | { type: typeof GET_ORDER_ERROR; payload: Error }
-    | RemoveCurrentOrderAction | RemoveIngredientsAction
+    | UpdateOrderListAction | RemoveCurrentOrderAction | RemoveIngredientsAction
+
+
+export interface Order {
+    _id: string;
+    status: 'done' | 'pending';
+    name: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+    ingredients: string[];
+}
 
 export type OrderState = {
     order: number | null,
+    orderList: Order[];
     isLoading: boolean,
     error: Error | null,
 }
@@ -202,4 +219,11 @@ export interface UserState {
     token: string | null;
     resetPasswordAccess: boolean;
     redirectPath: string | null;
+}
+
+export interface WebSocketResponse {
+    success: boolean;
+    orders: Order[];
+    total: number;
+    totalToday: number;
 }

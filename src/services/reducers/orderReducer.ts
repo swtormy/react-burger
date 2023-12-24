@@ -4,10 +4,12 @@ import {
     GET_ORDER_SUCCESS,
     GET_ORDER_ERROR,
     REMOVE_CURRENT_ORDER,
+    UPDATE_ORDER_LIST,
 } from '../actions/order';
 
 const initialState: OrderState = {
     order: null,
+    orderList: [],
     isLoading: false,
     error: null,
 };
@@ -35,6 +37,11 @@ export default function orderReducer(state = initialState, action: OrderActionTy
             return {
                 ...state,
                 order: null,
+            };
+        case UPDATE_ORDER_LIST:
+            return {
+                ...state,
+                orderList: action.payload,
             };
         default:
             return state;

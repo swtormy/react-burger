@@ -2,12 +2,22 @@ import React from 'react'
 import styles from "./feed-page.module.css";
 import OrderComponent from '../components/order-history/order-component';
 import { useLocation } from 'react-router-dom';
+import useWebSocket from '../hooks/useWebSocket';
+import { useAppSelector } from '../hooks/redux-hooks';
 
 
 type Props = {}
 
 const FeedPage = (props: Props) => {
+  const orders = useAppSelector(store => store.order.orderList)
   const location = useLocation()
+  const { total, totalToday } = useWebSocket('wss://norma.nomoreparties.space/orders/all');
+
+  const { done, pending } = React.useMemo(() => {
+    const done = orders.filter(el => el.status === "done")
+    const pending = orders.filter(el => el.status === "pending")
+    return { done, pending }
+  }, [orders])
   return (
     <div className={styles.feed_content}>
       <div className={styles.left_block}>
@@ -15,8 +25,8 @@ const FeedPage = (props: Props) => {
           Лента заказов
         </p>
         <div className={styles.order_cards}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(order => (
-            <OrderComponent key={order} order={order} location={location}/>
+          {orders.map(order => (
+            <OrderComponent key={order._id} order={order} location={location} />
           ))}
         </div>
       </div>
@@ -29,9 +39,9 @@ const FeedPage = (props: Props) => {
               </p>
             </div>
             <div className={styles.done_body}>
-              {["034533", "034532", "034531", "034530", "034529"].map(ordnum => (
-                <p key={ordnum} className={["text text_type_main-medium", styles.ordnumtext].join(" ")}>
-                  {ordnum}
+              {done.map(ordnum => (
+                <p key={ordnum._id} className={["text text_type_main-medium", styles.ordnumtext].join(" ")}>
+                  {ordnum.number}
                 </p>
               ))}
             </div>
@@ -43,9 +53,9 @@ const FeedPage = (props: Props) => {
               </p>
             </div>
             <div className={styles.progress_body}>
-              {["034534", "034535", "034536"].map(ordnum => (
-                <p key={ordnum} className={["text text_type_main-medium"].join(" ")}>
-                  {ordnum}
+              {pending.map(ordnum => (
+                <p key={ordnum._id} className={["text text_type_main-medium"].join(" ")}>
+                  {ordnum.number}
                 </p>
               ))}
             </div>
@@ -58,7 +68,7 @@ const FeedPage = (props: Props) => {
             </p>
           </div>
           <div className={styles.alltime_body}>
-            <p className={["text text_type_digits-large", styles.light_digits].join(" ")}>28 752</p>
+            <p className={["text text_type_digits-large", styles.light_digits].join(" ")}>{total}</p>
           </div>
         </div>
         <div className={styles.today_block}>
@@ -68,7 +78,7 @@ const FeedPage = (props: Props) => {
             </p>
           </div>
           <div className={styles.today_body}>
-            <p className={["text text_type_digits-large", styles.light_digits].join(" ")}>138</p>
+            <p className={["text text_type_digits-large", styles.light_digits].join(" ")}>{totalToday}</p>
           </div>
         </div>
       </div>
