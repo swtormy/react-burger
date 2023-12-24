@@ -37,7 +37,7 @@ function App() {
           {!previousLocation && <Route path="/ingredients/:id" element={<IngredientPage modal={false} />} />}
           <Route element={<PublicRouteElement />}>
             <Route path="/feed" element={<FeedPage />} />
-            <Route path="/feed/:number" element={<FeedDetailPage />} />
+            {!previousLocation && <Route path="/feed/:number" element={<FeedDetailPage modal={false} />} />}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -45,13 +45,15 @@ function App() {
           </Route>
           <Route element={<ProtectedRouteElement />}>
             <Route path="/profile/*" element={<ProfilePage />} />
-            <Route path="/profile/orders/:number" element={<OrderHistoryDetail />} />
           </Route>
+          {!previousLocation && <Route path="/profile/orders/:number" element={<OrderHistoryDetail modal={false} />} />}
         </Routes>
 
         {previousLocation && (
           <Routes>
+            <Route path="/profile/orders/:number" element={<OrderHistoryDetail modal={true} />} />
             <Route path="/ingredients/:id" element={<IngredientPage modal={true} />} />
+            <Route path="/feed/:number" element={<FeedDetailPage modal={true} />} />
           </Routes>
         )}
       </main>

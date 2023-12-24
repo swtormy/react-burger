@@ -2,17 +2,27 @@ import React from 'react'
 import styles from './order-component.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useAppSelector } from '../../hooks/redux-hooks';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useModal } from '../../hooks/useModal';
 
 type Props = {
     order: any;
+    location: any;
 }
 
-const OrderComponent: React.FC<Props> = ({ order }) => {
+const OrderComponent: React.FC<Props> = ({ order, location }) => {
     const today = new Date()
     const ingredients = useAppSelector(store => store.ingredients.ingredientsList)
+    const { openModal } = useModal();
+    const navigate = useNavigate()
+
+    const handleOrderClick = () => {
+
+        navigate(`${order}`, { state: { previousLocation: location } });
+        openModal();
+    };
     return (
-        <Link to={`${order}`} className={styles.order_component}>
+        <div onClick={handleOrderClick} className={styles.order_component}>
             <div className={styles.title}>
                 <p className="text text_type_main-default">
                     #034535
@@ -58,7 +68,7 @@ const OrderComponent: React.FC<Props> = ({ order }) => {
                     <CurrencyIcon type="primary" />
                 </div>
             </div>
-        </Link>
+        </div>
     )
 }
 

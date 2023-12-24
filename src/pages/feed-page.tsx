@@ -1,11 +1,13 @@
 import React from 'react'
 import styles from "./feed-page.module.css";
 import OrderComponent from '../components/order-history/order-component';
+import { useLocation } from 'react-router-dom';
 
 
 type Props = {}
 
 const FeedPage = (props: Props) => {
+  const location = useLocation()
   return (
     <div className={styles.feed_content}>
       <div className={styles.left_block}>
@@ -14,7 +16,7 @@ const FeedPage = (props: Props) => {
         </p>
         <div className={styles.order_cards}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(order => (
-            <OrderComponent key={order} order={order} />
+            <OrderComponent key={order} order={order} location={location}/>
           ))}
         </div>
       </div>
