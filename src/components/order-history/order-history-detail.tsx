@@ -10,7 +10,6 @@ type Props = {
 
 const OrderHistoryDetail: React.FC<Props> = ({ modal }) => {
   const navigate = useNavigate()
-  console.log(modal);
   
   if (modal) return <Modal onClose={() => navigate("/profile/orders")}>
     <OrderDetailComponent />

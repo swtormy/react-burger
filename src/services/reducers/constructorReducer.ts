@@ -57,7 +57,7 @@ export default function constructorReducer(state: ConstructorState = initialStat
 
             return {
                 ...state,
-                constructorIngredients: updatedConstructorIngredients.toSorted((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0))
+                constructorIngredients: updatedConstructorIngredients.sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0))
             };
         }
         default:

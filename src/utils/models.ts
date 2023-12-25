@@ -1,7 +1,8 @@
 import { ADD_BUNS, ADD_INGREDIENT, REMOVE_ALL_INGREDIENTS, REMOVE_INGREDIENT, UPDATE_ORDER_INDEX } from "../services/actions/constructor";
 import { ADD_CURRENT_INGREDIENT, GET_INGREDIENTS_ERROR, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, REMOVE_CURRENT_INGREDIENT } from "../services/actions/ingredients";
-import { GET_ORDER_ERROR, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REMOVE_CURRENT_ORDER, UPDATE_ORDER_LIST } from "../services/actions/order";
+import { GET_ORDER_ERROR, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REMOVE_CURRENT_ORDER, UPDATE_ORDER_LIST, UPDATE_OWN_ORDER_LIST } from "../services/actions/order";
 import { LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_SUCCESS, REFRESH_TOKEN_FAIL, REFRESH_TOKEN_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS, RESET_PASSWORD_ACCESS, SAVE_REDIRECT_PATH } from "../services/actions/user";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS } from "../services/actions/ws-action-types";
 
 export type TIngredientExtended = {
     _id: string,
@@ -132,11 +133,15 @@ export interface UpdateOrderListAction {
     type: typeof UPDATE_ORDER_LIST;
     payload: Order[];
 }
+export interface UpdateOwnOrderListAction {
+    type: typeof UPDATE_OWN_ORDER_LIST;
+    payload: Order[];
+}
 
 export type OrderActionTypes = { type: typeof GET_ORDER_REQUEST }
     | { type: typeof GET_ORDER_SUCCESS; payload: number }
     | { type: typeof GET_ORDER_ERROR; payload: Error }
-    | UpdateOrderListAction | RemoveCurrentOrderAction | RemoveIngredientsAction
+    | UpdateOwnOrderListAction | UpdateOrderListAction | RemoveCurrentOrderAction | RemoveIngredientsAction
 
 
 export interface Order {
@@ -152,6 +157,7 @@ export interface Order {
 export type OrderState = {
     order: number | null,
     orderList: Order[];
+    ownOrderList: Order[];
     isLoading: boolean,
     error: Error | null,
 }
@@ -214,8 +220,8 @@ export type AuthActionTypes =
     AllowResetPasswordAccessAction | LogoutFailAction |
     LoginSuccessAction | RegisterSuccessAction | RegisterFailAction
 
-export interface UserState {
-    user: User | null;
+export type UserStoreState = {
+    user_info: User | null;
     token: string | null;
     resetPasswordAccess: boolean;
     redirectPath: string | null;
@@ -227,3 +233,10 @@ export interface WebSocketResponse {
     total: number;
     totalToday: number;
 }
+
+export type TWSStoreActions = {
+    wsInit: typeof  WS_CONNECTION_START,
+    onOpen: typeof  WS_CONNECTION_SUCCESS,
+    onClose: typeof WS_CONNECTION_CLOSED,
+    onError: typeof  WS_CONNECTION_ERROR,
+  };

@@ -2,27 +2,39 @@ import React from 'react'
 import { useAppSelector } from '../../hooks/redux-hooks'
 import styles from "./order-detail-component.module.css"
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useParams } from 'react-router-dom'
 
 type Props = {}
 
 const OrderDetailComponent = (props: Props) => {
+    const { number: order_number } = useParams()
+
     const ingredients = useAppSelector(store => store.ingredients.ingredientsList)
+    const orders = useAppSelector(store => store.order.orderList)
+    const {needIngs, order: need_order} = React.useMemo(() => {
+        if (order_number) {
+            const order = orders.find(el => el.number === parseInt(order_number))
+            const needIngs = ingredients.filter(el => order?.ingredients.includes(el._id))
+            return {needIngs, order}
+        }
+        return {}
+    }, [orders])
     const today = new Date()
     return (
         <div className={styles.order_detail}>
             <div className={styles.order_number}>
                 <p className="text text_type_main-default">
-                    #034533
+                    {need_order?.number}
                 </p>
             </div>
             <div className={styles.order_name}>
                 <p className="text text_type_main-medium">
-                    Black Hole Singularity острый бургер
+                    {need_order?.name}
                 </p>
             </div>
             <div className={styles.order_status}>
                 <p className="text text_type_main-default">
-                    Выполнен
+                    {need_order?.status === "done" ? "Выполнен" : "В процессе"}
                 </p>
             </div>
             <div className={styles.order_composition_title}>
@@ -31,21 +43,21 @@ const OrderDetailComponent = (props: Props) => {
                 </p>
             </div>
             <div className={styles.order_composition_body}>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(el => (
-                    <div key={el} className={styles.order_ingr}>
+                {needIngs?.map(el => (
+                    <div key={el._id} className={styles.order_ingr}>
                         <div className={styles.order_desc}>
                             <div className={styles.ing_circle} >
-                                <img src={ingredients[el]?.image_mobile ?? "unknown"} className={styles.img_in_circle} />
+                                <img src={el?.image_mobile ?? "unknown"} className={styles.img_in_circle} />
                             </div>
                             <div className={styles.order_name}>
                                 <p className="text text_type_main-default">
-                                    {ingredients[el]?.name}
+                                    {el?.name}
                                 </p>
                             </div>
                         </div>
                         <div className={styles.ing_order_price}>
                             <p className="text text_type_digits-default">
-                                2x300
+                                {el.type === "bun" ? 2 : 1}x{el.price}
                             </p>
                             <CurrencyIcon type="primary" />
                         </div>

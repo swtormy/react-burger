@@ -8,7 +8,7 @@ import { Order, TIngredientExtended } from '../../utils/models';
 
 type Props = {
     order: Order;
-    location: string;
+    location: any;
 }
 
 const calculateOrderSum = (orderIngs: TIngredientExtended[]) => {
@@ -32,7 +32,12 @@ const OrderComponent: React.FC<Props> = ({ order, location }) => {
     };
 
     const orderIng = React.useMemo(() => {
-        return ingredients.filter(el => order.ingredients.includes(el._id))
+        return ingredients.filter(el => {
+            const ings = order.ingredients
+            if(ings){
+                return order.ingredients.includes(el._id)
+            }
+        })
     }, [ingredients])
 
     return (

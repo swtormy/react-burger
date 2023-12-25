@@ -11,7 +11,7 @@ type Props = {}
 const FeedPage = (props: Props) => {
   const orders = useAppSelector(store => store.order.orderList)
   const location = useLocation()
-  const { total, totalToday } = useWebSocket('wss://norma.nomoreparties.space/orders/all');
+  const { total, totalToday } = useWebSocket('wss://norma.nomoreparties.space/orders/all', "all");
 
   const { done, pending } = React.useMemo(() => {
     const done = orders.filter(el => el.status === "done")

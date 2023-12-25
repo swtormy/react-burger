@@ -14,7 +14,7 @@ type Props = {}
 const LoginPage: React.FC<Props> = () => {
   const { values, handleChange } = useForm({ email: '', password: '' });
 
-  const user = useAppSelector(state => state.user.user);
+  const user = useAppSelector(state => state.user.user_info);
   const redirectPath = useAppSelector(state => state.user.redirectPath);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

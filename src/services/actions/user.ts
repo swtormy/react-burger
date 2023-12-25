@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { checkTokenExpiry } from '../../utils/utils-funcs';
 import { AllowResetPasswordAccessAction, AuthActionTypes, RefreshTokenSuccessAction, RegisterSuccessAction, SaveRedirectPathAction, TUserProfileData, User } from '../../utils/models';
 import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
+import { AppDispatch, RootState } from '../store';
 
 export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN/SUCCESS';
 export const REFRESH_TOKEN_FAIL = 'REFRESH_TOKEN/FAIL';
@@ -111,10 +111,10 @@ export const logoutUser = (refreshToken : string): ThunkAction<void, RootState, 
     };
 };
 
-export const checkAuthentication = (): ThunkAction<void, RootState, unknown, AuthActionTypes> => (dispatch) => {
-    const accessToken = Cookies.get('accessToken');
-    const user = Cookies.get('user') ? Cookies.get('user') : null;
-    const refToken = Cookies.get('refreshToken');
+export const checkAuthentication = ():ThunkAction<void, RootState, unknown, AuthActionTypes> => (dispatch) => {
+    const accessToken = Cookies.get('accessToken') || "";
+    const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null;
+    const refToken = Cookies.get('refreshToken') || "";
     if (accessToken && checkTokenExpiry(accessToken)) {
         dispatch({
             type: LOGIN_SUCCESS,

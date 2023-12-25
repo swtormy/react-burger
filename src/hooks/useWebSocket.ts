@@ -1,15 +1,15 @@
 import React from "react";
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateOrderList } from '../services/actions/order';
+import { updateOrderList, updateOwnOrderList } from '../services/actions/order';
 import { Order, WebSocketResponse } from '../utils/models';
 import { useAppDispatch } from "./redux-hooks";
 
-const useWebSocket = (url: string) => {
+const useWebSocket = (url: string, type: "all" | "own") => {
     const dispatch = useAppDispatch()
     const [error, setError] = React.useState<Event | null>(null);
-    const [total, setTotal] = React.useState<number | null>(null);
-    const [totalToday, setTotalToday] = React.useState<number | null>(null);
+    const [total, setTotal] = React.useState<number>(0);
+    const [totalToday, setTotalToday] = React.useState<number>(0);
 
     const connectWebSocket = useCallback(() => {
         const socket = new WebSocket(url);
@@ -21,9 +21,14 @@ const useWebSocket = (url: string) => {
         socket.onmessage = event => {
             const data: WebSocketResponse = JSON.parse(event.data);
             if (data.success) {
-                dispatch(updateOrderList(data.orders))
-                setTotal(data.total)
-                setTotalToday(data.totalToday)
+                if(type === "all"){
+                    dispatch(updateOrderList(data.orders))
+                    setTotal(data.total)
+                    setTotalToday(data.totalToday)
+                } else {
+                    dispatch(updateOwnOrderList(data.orders))
+                }
+                
             }
         };
 
