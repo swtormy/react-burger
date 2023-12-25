@@ -167,11 +167,11 @@ export interface User {
     name: string;
 }
 
-export interface Tokens {
-    user?: User;
-    accessToken: string;
-    refreshToken: string;
-}
+// export interface Tokens {
+//     user?: User;
+//     accessToken: string;
+//     refreshToken: string;
+// }
 
 
 export interface SaveRedirectPathAction {
@@ -181,7 +181,7 @@ export interface SaveRedirectPathAction {
 
 export interface RefreshTokenSuccessAction {
     type: typeof REFRESH_TOKEN_SUCCESS;
-    payload: Tokens;
+    payload: any;
 }
 
 export interface RefreshTokenFailAction {
@@ -203,12 +203,12 @@ export interface AllowResetPasswordAccessAction {
 
 export interface LoginSuccessAction {
     type: typeof LOGIN_SUCCESS;
-    payload: Tokens;
+    payload: any;
 }
 
 export interface RegisterSuccessAction {
     type: typeof REGISTER_SUCCESS;
-    payload: Tokens;
+    payload: any;
 }
 export interface RegisterFailAction {
     type: typeof REGISTER_FAIL;

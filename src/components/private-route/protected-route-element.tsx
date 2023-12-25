@@ -12,16 +12,16 @@ const ProtectedRouteElement: React.FC<Props> = ({ }) => {
 
     useEffect(() => {
         dispatch(checkAuthentication());
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         if (!token) {
             dispatch(saveRedirectPath(location.pathname));
         }
-    }, [token, dispatch, location.pathname]);
+    }, [token, location.pathname]);
 
     if (!token) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/login" replace />;
     }
 
     return <Outlet />;

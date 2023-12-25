@@ -45,8 +45,8 @@ function App() {
           </Route>
           <Route element={<ProtectedRouteElement />}>
             <Route path="/profile/*" element={<ProfilePage />} />
-          </Route>
           {!previousLocation && <Route path="/profile/orders/:number" element={<OrderHistoryDetail modal={false} />} />}
+          </Route>
         </Routes>
 
         {previousLocation && (

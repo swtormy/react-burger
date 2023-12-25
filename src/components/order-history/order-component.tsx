@@ -11,7 +11,7 @@ type Props = {
     location: any;
 }
 
-const calculateOrderSum = (orderIngs: TIngredientExtended[]) => {
+export const calculateOrderSum = (orderIngs: TIngredientExtended[]) => {
     const bun = orderIngs.find(el => el.type === "bun")
     const other = orderIngs.filter(el => el.type !== "bun")
     const totalPrice = other.reduce((total, item) => total + item.price, 0);
@@ -64,10 +64,10 @@ const OrderComponent: React.FC<Props> = ({ order, location }) => {
             <div className={styles.info}>
                 <div className={styles.ingredients}>
                     {
-                        orderIng.map((ingr, index) => (
+                        orderIng.slice(0,6).map((ingr, index) => (
                             <div key={ingr._id} className={styles.ingredient} >
                                 <img src={ingr?.image_mobile ?? "unknown"} />
-                                {index === 6 && <span className={styles.ingredientCount}>
+                                {index === 5 && <span className={styles.ingredientCount}>
                                     <p className={[styles.ingredientCountText, "text text_type_main-default"].join(' ')}>
                                         +{orderIng.length - 5}
                                     </p></span>}

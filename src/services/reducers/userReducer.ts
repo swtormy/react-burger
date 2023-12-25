@@ -24,16 +24,16 @@ export default function userReducer(state: UserStoreState = initialState, action
             Cookies.set('refreshToken', action.payload.refreshToken);
             return {
                 ...state,
-                user: action.payload.user,
-                token: action.payload.accessToken,
+                user_info: action.payload.user,
+                token: action.payload.accessToken.replace("Bearer ", ""),
             };
         case REFRESH_TOKEN_SUCCESS:
             Cookies.set('accessToken', action.payload.accessToken.replace("Bearer ", ""));
             Cookies.set('refreshToken', action.payload.refreshToken);
             return {
                 ...state,
-                user: action.payload.user,
-                token: action.payload.accessToken,
+                user_info: action.payload.user,
+                token: action.payload.accessToken.replace("Bearer ", ""),
             };
         case RESET_PASSWORD_ACCESS:
             return {
@@ -45,7 +45,7 @@ export default function userReducer(state: UserStoreState = initialState, action
             Cookies.remove('refreshToken');
             return {
                 ...state,
-                user: null,
+                user_info: null,
                 token: null,
             };
         default:

@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks/redux-hooks'
 import styles from "./order-detail-component.module.css"
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useParams } from 'react-router-dom'
+import { calculateOrderSum } from './order-component'
 
 type Props = {}
 
@@ -19,7 +20,6 @@ const OrderDetailComponent = (props: Props) => {
         }
         return {}
     }, [orders])
-    const today = new Date()
     return (
         <div className={styles.order_detail}>
             <div className={styles.order_number}>
@@ -66,21 +66,16 @@ const OrderDetailComponent = (props: Props) => {
             </div>
             <div className={styles.order_price}>
                 <p className={["text text_type_main-default", styles.intext_color].join(" ")}>
-                    <FormattedDate
+                    {need_order && <FormattedDate
                         date={
                             new Date(
-                                today.getFullYear(),
-                                today.getMonth(),
-                                today.getDate(),
-                                today.getHours(),
-                                today.getMinutes() - 1,
-                                0,
+                                need_order.createdAt
                             )
                         }
-                    />
+                    />}
                 </p>
                 <div className={styles.price}>
-                    <p className="text text_type_digits-default">510</p>
+                    <p className="text text_type_digits-default">{needIngs && calculateOrderSum(needIngs)}</p>
                     <CurrencyIcon type="primary" />
                 </div>
             </div>
