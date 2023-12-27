@@ -9,6 +9,7 @@ import { Order, TIngredientExtended } from '../../utils/models';
 type Props = {
     order: Order;
     location: any;
+    type: "all" | "own";
 }
 
 export const calculateOrderSum = (orderIngs: TIngredientExtended[]) => {
@@ -21,7 +22,7 @@ export const calculateOrderSum = (orderIngs: TIngredientExtended[]) => {
     return totalPrice
 }
 
-const OrderComponent: React.FC<Props> = ({ order, location }) => {
+const OrderComponent: React.FC<Props> = ({ order, location, type }) => {
     const ingredients = useAppSelector(store => store.ingredients.ingredientsList)
     const { openModal } = useModal();
     const navigate = useNavigate()
@@ -34,7 +35,7 @@ const OrderComponent: React.FC<Props> = ({ order, location }) => {
     const orderIng = React.useMemo(() => {
         return ingredients.filter(el => {
             const ings = order.ingredients
-            if(ings){
+            if (ings) {
                 return order.ingredients.includes(el._id)
             }
         })
@@ -60,11 +61,16 @@ const OrderComponent: React.FC<Props> = ({ order, location }) => {
                 <p className="text text_type_main-medium">
                     {order.name}
                 </p>
+                {type === "own" &&
+                    <p className="text text_type_main-medium">
+                        {order.status === "done" ?  "Готов" : order.status === "pending" ? "Готовится" : "Создан"}
+                    </p>
+                }
             </div>
             <div className={styles.info}>
                 <div className={styles.ingredients}>
                     {
-                        orderIng.slice(0,6).map((ingr, index) => (
+                        orderIng.slice(0, 6).map((ingr, index) => (
                             <div key={ingr._id} className={styles.ingredient} >
                                 <img src={ingr?.image_mobile ?? "unknown"} />
                                 {index === 5 && <span className={styles.ingredientCount}>

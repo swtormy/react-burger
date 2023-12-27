@@ -2,24 +2,49 @@ import React from 'react'
 import { useAppSelector } from '../../hooks/redux-hooks'
 import styles from "./order-detail-component.module.css"
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { calculateOrderSum } from './order-component'
+import { fetchOrder } from '../../utils/burger-api'
+import { Order } from '../../utils/models'
 
-type Props = {}
+type Props = {
+}
 
-const OrderDetailComponent = (props: Props) => {
+const OrderDetailComponent:React.FC<Props> = ({}) => {
     const { number: order_number } = useParams()
+    const [orders, setOrders] = React.useState<Order[]>([])
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (order_number) {
+            setIsLoading(true);
+            fetchOrder(order_number)
+                .then(response => {
+                    setOrders(response.orders);
+                })
+                .finally(() => setIsLoading(false))
+                .catch(error => {
+                    if (error === 'unauthorized') {
+                        navigate('/login');
+                    }
+                });
+        }
+    }, [order_number]);
 
     const ingredients = useAppSelector(store => store.ingredients.ingredientsList)
-    const orders = useAppSelector(store => store.order.orderList)
     const {needIngs, order: need_order} = React.useMemo(() => {
         if (order_number) {
-            const order = orders.find(el => el.number === parseInt(order_number))
+            const order = orders?.find(el => el.number === parseInt(order_number))
             const needIngs = ingredients.filter(el => order?.ingredients.includes(el._id))
             return {needIngs, order}
         }
         return {}
     }, [orders])
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
     return (
         <div className={styles.order_detail}>
             <div className={styles.order_number}>

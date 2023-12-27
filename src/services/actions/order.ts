@@ -46,16 +46,16 @@ export const removeCurrentOrder = (): RemoveCurrentOrderAction => {
     };
 };
 
-export const updateOrderList = (orders: Order[]): UpdateOrderListAction => {
-    return {
-        type: UPDATE_ORDER_LIST,
-        payload: orders,
-    }
-};
+// export const updateOrderList = (orders: Order[]): UpdateOrderListAction => {
+//     return {
+//         type: UPDATE_ORDER_LIST,
+//         payload: orders,
+//     }
+// };
 
-export const updateOwnOrderList = (orders: Order[]): UpdateOwnOrderListAction => {
-    return {
-        type: UPDATE_OWN_ORDER_LIST,
-        payload: orders,
-    }
-};
+// export const updateOwnOrderList = (orders: Order[]): UpdateOwnOrderListAction => {
+//     return {
+//         type: UPDATE_OWN_ORDER_LIST,
+//         payload: orders,
+//     }
+// };

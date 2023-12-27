@@ -1,12 +1,25 @@
 import Cookies from 'js-cookie';
 import { TErrorResponseData, TRequestOptions, TResponseData, TIngredientExtended, TUserProfileData } from './models';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://norma.nomoreparties.space/api/';
 
 
-const checkResponse = (res: Response): Promise<TResponseData> => {
+const checkResponse = async (res: Response): Promise<TResponseData> => {
     if (res.ok) {
         return res.json();
+    }
+    if (res.status === 403) {
+        const refreshToken = Cookies.get('refreshToken') || '';
+        const refreshedData = await refresh(refreshToken);
+        if (refreshedData.success) {
+            Cookies.set('accessToken', refreshedData.accessToken);
+            const retryOptions = {...res, headers: {...res.headers, 'Authorization': "Bearer " + refreshedData.accessToken}};
+            return fetch(res.url, retryOptions).then(checkResponse);
+        }
+    }
+    if (res.status === 401) {
+        return Promise.reject('unauthorized');
     }
     return Promise.reject(`Ошибка ${res.status}`);
 };
@@ -64,6 +77,16 @@ export const submitNewPassword = (password: string, token: string): Promise<TRes
 export const fetchUserProfile = (): Promise<TResponseData> => {
     const token = Cookies.get('accessToken') || '';
     return request('auth/user', {
+        method: 'GET',
+        headers: {
+            'Authorization': "Bearer " + token
+        }
+    })
+};
+
+export const fetchOrder = (order: string): Promise<TResponseData> => {
+    const token = Cookies.get('accessToken') || '';
+    return request(`orders/${order}`, {
         method: 'GET',
         headers: {
             'Authorization': "Bearer " + token

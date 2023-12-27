@@ -2,7 +2,7 @@ import { ADD_BUNS, ADD_INGREDIENT, REMOVE_ALL_INGREDIENTS, REMOVE_INGREDIENT, UP
 import { ADD_CURRENT_INGREDIENT, GET_INGREDIENTS_ERROR, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, REMOVE_CURRENT_INGREDIENT } from "../services/actions/ingredients";
 import { GET_ORDER_ERROR, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, REMOVE_CURRENT_ORDER, UPDATE_ORDER_LIST, UPDATE_OWN_ORDER_LIST } from "../services/actions/order";
 import { LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_SUCCESS, REFRESH_TOKEN_FAIL, REFRESH_TOKEN_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS, RESET_PASSWORD_ACCESS, SAVE_REDIRECT_PATH } from "../services/actions/user";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS } from "../services/actions/ws-action-types";
+
 
 export type TIngredientExtended = {
     _id: string,
@@ -156,8 +156,8 @@ export interface Order {
 
 export type OrderState = {
     order: number | null,
-    orderList: Order[];
-    ownOrderList: Order[];
+    // orderList: Order[];
+    // ownOrderList: Order[];
     isLoading: boolean,
     error: Error | null,
 }
@@ -234,9 +234,3 @@ export interface WebSocketResponse {
     totalToday: number;
 }
 
-export type TWSStoreActions = {
-    wsInit: typeof  WS_CONNECTION_START,
-    onOpen: typeof  WS_CONNECTION_SUCCESS,
-    onClose: typeof WS_CONNECTION_CLOSED,
-    onError: typeof  WS_CONNECTION_ERROR,
-  };
