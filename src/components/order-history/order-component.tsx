@@ -62,8 +62,8 @@ const OrderComponent: React.FC<Props> = ({ order, location, type }) => {
                     {order.name}
                 </p>
                 {type === "own" &&
-                    <p className="text text_type_main-medium">
-                        {order.status === "done" ?  "Готов" : order.status === "pending" ? "Готовится" : "Создан"}
+                    <p className={["text text_type_main-default", order.status === "done" ? styles.color_text : ""].join(" ")}>
+                        {order.status === "done" ?  "Выполнен" : order.status === "pending" ? "Готовится" : "Создан"}
                     </p>
                 }
             </div>
