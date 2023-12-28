@@ -26,8 +26,6 @@ const LoginPage: React.FC<Props> = () => {
   }
 
   React.useEffect(() => {
-    console.log("DONE");
-    
     if (user) {
       navigate(redirectPath || '/');
     }

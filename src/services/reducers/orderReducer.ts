@@ -8,8 +8,6 @@ import {
 
 const initialState: OrderState = {
     order: null,
-    // orderList: [],
-    // ownOrderList: [],
     isLoading: false,
     error: null,
 };

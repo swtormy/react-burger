@@ -12,12 +12,14 @@ const OrderHistory: React.FC<Props> = ({ }) => {
   const token = useAppSelector(store => store.user.token)
   const dispatch = useAppDispatch()
   const ownorders = useAppSelector(store => store.socket.ownOrders?.orders)
-
+  const ORDERS_LINK = `wss://norma.nomoreparties.space/orders?token=${token}`
+  
   React.useEffect(()=>{
-    if(token){
-      dispatch(connect(`wss://norma.nomoreparties.space/orders?token=${token}`))
+    dispatch(connect(ORDERS_LINK))
+    return () => {
+      dispatch(disconnect())
     }
-  },[token, dispatch, location])
+  },[dispatch])
 
 
   return (

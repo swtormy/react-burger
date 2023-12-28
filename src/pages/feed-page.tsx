@@ -3,7 +3,7 @@ import styles from "./feed-page.module.css";
 import OrderComponent from '../components/order-history/order-component';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { connect } from '../services/actions/ws-actions';
+import { connect, disconnect } from '../services/actions/ws-actions';
 
 
 type Props = {}
@@ -20,8 +20,13 @@ const FeedPage = (props: Props) => {
     return { done, pending }
   }, [orders])
 
+  const ALL_ORDERS_LINK = 'wss://norma.nomoreparties.space/orders/all'
+
   React.useEffect(()=>{
-    dispatch(connect('wss://norma.nomoreparties.space/orders/all'))
+    dispatch(connect(ALL_ORDERS_LINK))
+    return () => {
+      dispatch(disconnect())
+    }
   },[])
   return (
     <div className={styles.feed_content}>

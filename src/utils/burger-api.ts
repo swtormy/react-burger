@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
 import { TErrorResponseData, TRequestOptions, TResponseData, TIngredientExtended, TUserProfileData } from './models';
-import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://norma.nomoreparties.space/api/';
 
@@ -45,8 +44,10 @@ export const getIngredients = (): Promise<TResponseData> => request("ingredients
 
 export const createOrder = (ingredientIds: string[]): Promise<TResponseData> => request("orders", {
     method: 'POST',
+
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': "Bearer " + Cookies.get('accessToken') || ''
     },
     body: JSON.stringify({
         ingredients: ingredientIds,

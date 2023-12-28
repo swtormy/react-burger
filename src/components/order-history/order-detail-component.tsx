@@ -82,7 +82,7 @@ const OrderDetailComponent:React.FC<Props> = ({}) => {
                         </div>
                         <div className={styles.ing_order_price}>
                             <p className="text text_type_digits-default">
-                                {el.type === "bun" ? 2 : 1}x{el.price}
+                                {el.type === "bun" ? 2 : orders.find(el => el.number===parseInt(order_number!))?.ingredients.filter(ing => ing === el._id).length}x{el.price}
                             </p>
                             <CurrencyIcon type="primary" />
                         </div>

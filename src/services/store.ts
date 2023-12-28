@@ -18,7 +18,15 @@ declare global {
     }
 }
 
-const wsActions = {
+const ordersWsActions = {
+  connect: WSConnect,
+  disconnect: WSDisconnect,
+  wsConnecting: WSConnecting,
+  wsOpen: WSOpen,
+  wsClose: WSClose,
+  wsError: WSError,
+}
+const feedWsActions = {
   connect: WSConnect,
   disconnect: WSDisconnect,
   wsConnecting: WSConnecting,
@@ -27,14 +35,15 @@ const wsActions = {
   wsError: WSError,
 }
 
-const webSocketMiddleware = createSocketMiddleware(wsActions)
+const webSocketMiddlewareOrders = createSocketMiddleware(ordersWsActions)
+const webSocketMiddlewareFeed = createSocketMiddleware(feedWsActions)
 
 const composeEnhancers =
     typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         : compose;
 
-const enhancer: StoreEnhancer<{ dispatch: unknown }, {}> = composeEnhancers(applyMiddleware(thunk, webSocketMiddleware));
+const enhancer: StoreEnhancer<{ dispatch: unknown }, {}> = composeEnhancers(applyMiddleware(thunk, webSocketMiddlewareOrders, webSocketMiddlewareFeed));
 const store = createStore(rootReducer, enhancer);
 
 export type RootState = ReturnType<typeof store.getState>

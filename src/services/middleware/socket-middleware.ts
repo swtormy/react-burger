@@ -24,7 +24,6 @@ export const createSocketMiddleware = (wsActions: TwsActrionTypes): Middleware<{
             const { connect, disconnect, wsClose, wsConnecting, wsError, wsOpen } = wsActions
 
             if (connect.match(action)) {
-                console.log("WebSockert connecting")
                 url = action.payload
                 socket = new WebSocket(url)
                 isConnected = true
@@ -34,7 +33,6 @@ export const createSocketMiddleware = (wsActions: TwsActrionTypes): Middleware<{
 
             if (socket && wsConnecting.match(action)) {
                 socket.onopen = () => {
-                    console.log("open");
                     dispatch(wsOpen())
                 }
 
@@ -67,7 +65,6 @@ export const createSocketMiddleware = (wsActions: TwsActrionTypes): Middleware<{
                             dispatch(connect(url))
                         }, 3000)
                     }
-                    console.log("Connection closed");
                     dispatch(wsClose())
                 }
 
