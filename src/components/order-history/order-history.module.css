@@ -1,4 +1,9 @@
 .order_history {
     display: flex;
-    width: 100%;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-right: 8px;
+    gap: 24px;
+    height: calc(100vh - 200px);
+    margin-top: -60px;
 }

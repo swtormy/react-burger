@@ -1,3 +1,4 @@
+import { OrderActionTypes, OrderState } from '../../utils/models';
 import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
@@ -5,13 +6,13 @@ import {
     REMOVE_CURRENT_ORDER,
 } from '../actions/order';
 
-const initialState = {
+const initialState: OrderState = {
     order: null,
     isLoading: false,
     error: null,
 };
 
-export default function orderReducer(state = initialState, action) {
+export default function orderReducer(state = initialState, action: OrderActionTypes) {
     switch (action.type) {
         case GET_ORDER_REQUEST:
             return {
@@ -35,6 +36,16 @@ export default function orderReducer(state = initialState, action) {
                 ...state,
                 order: null,
             };
+        // case UPDATE_ORDER_LIST:
+        //     return {
+        //         ...state,
+        //         orderList: action.payload,
+        //     };
+        // case UPDATE_OWN_ORDER_LIST:
+        //     return {
+        //         ...state,
+        //         ownOrderList: action.payload,
+        //     };
         default:
             return state;
     }

@@ -12,9 +12,9 @@ const PublicRouteElement = () => {
         return <Navigate to="/forgot-password" />;
     }
 
-    if (token) {
-        return <Navigate to="/profile" />;
-    }
+    // if (token) {
+    //     return <Navigate to="/profile" />;
+    // }
     return <Outlet />;
 }
 

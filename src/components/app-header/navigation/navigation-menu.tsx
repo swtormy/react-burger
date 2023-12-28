@@ -17,7 +17,7 @@ const NavigationMenu: React.FC<Props> = ({ board, setBoard }) => {
         },
         {
             name: 'Лента заказов',
-            href: "orders",
+            href: "feed",
             icon: <ListIcon type={"secondary"} />
         }
     ]

@@ -15,6 +15,9 @@ import PublicRouteElement from '../public-route/public-route-element';
 import { useLocation } from 'react-router-dom';
 import { getIngredients } from '../../services/actions/ingredients'
 import { useAppDispatch } from '../../hooks/redux-hooks';
+import FeedDetailPage from '../../pages/feed-detail-page';
+import FeedPage from '../../pages/feed-page';
+import OrderHistoryDetail from '../order-history/order-history-detail';
 
 
 function App() {
@@ -33,6 +36,8 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           {!previousLocation && <Route path="/ingredients/:id" element={<IngredientPage modal={false} />} />}
           <Route element={<PublicRouteElement />}>
+            <Route path="/feed" element={<FeedPage />} />
+            {!previousLocation && <Route path="/feed/:number" element={<FeedDetailPage modal={false} />} />}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -40,12 +45,15 @@ function App() {
           </Route>
           <Route element={<ProtectedRouteElement />}>
             <Route path="/profile/*" element={<ProfilePage />} />
+          {!previousLocation && <Route path="/profile/orders/:number" element={<OrderHistoryDetail modal={false} />} />}
           </Route>
         </Routes>
 
         {previousLocation && (
           <Routes>
+            <Route path="/profile/orders/:number" element={<OrderHistoryDetail modal={true} />} />
             <Route path="/ingredients/:id" element={<IngredientPage modal={true} />} />
+            <Route path="/feed/:number" element={<FeedDetailPage modal={true} />} />
           </Routes>
         )}
       </main>

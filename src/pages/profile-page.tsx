@@ -6,6 +6,7 @@ import OrderHistory from '../components/order-history/order-history'
 import Cookies from 'js-cookie'
 import { logoutUser } from '../services/actions/user'
 import { useAppDispatch } from '../hooks/redux-hooks'
+import OrderHistoryDetail from '../components/order-history/order-history-detail'
 
 type Props = {}
 
@@ -15,7 +16,9 @@ const ProfilePage: React.FC<Props> = () => {
   const handleLogout = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     const refreshToken = Cookies.get('refreshToken');
-    dispatch(logoutUser(refreshToken))
+    if(refreshToken){
+      dispatch(logoutUser(refreshToken))
+    }
   };
   return (
     <div className={styles.profile_page}>

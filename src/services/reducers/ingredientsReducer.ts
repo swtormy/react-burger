@@ -1,3 +1,4 @@
+import { IngredientsActionTypes, IngredientsState } from '../../utils/models';
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -6,14 +7,14 @@ import {
     REMOVE_CURRENT_INGREDIENT
 } from '../actions/ingredients';
 
-const initialState = {
+const initialState: IngredientsState = {
     ingredientsList: [],
-    currentIngredient: localStorage.getItem("currentIngredient") ? JSON.parse(localStorage.getItem("currentIngredient")) : null,
+    currentIngredient: localStorage.getItem("currentIngredient") ? JSON.parse(localStorage.getItem("currentIngredient")!) : null,
     isLoading: false,
     error: null,
 };
 
-export default function ingredientsReducer(state = initialState, action) {
+export default function ingredientsReducer(state: IngredientsState = initialState, action: IngredientsActionTypes) {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {

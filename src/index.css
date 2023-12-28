@@ -29,3 +29,6 @@ code {
   scrollbar-width: thin;
   scrollbar-color: #8585AD #2F2F37;
 }
+a{
+  text-decoration-line: none !important;
+}
