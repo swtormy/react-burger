@@ -65,7 +65,7 @@ const BurgerConstructor: React.FC<Props> = ({ }) => {
               </div>
             </div>
             <div className={styles.button}>
-              <Button disabled={disabled} htmlType="button" type="primary" size="medium" onClick={handleOrder}>
+              <Button disabled={disabled} htmlType="button" type="primary" size="medium" onClick={handleOrder} data-cy={"make-an-order"}>
                 Оформить заказ
               </Button>
             </div>

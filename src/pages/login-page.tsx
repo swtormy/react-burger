@@ -43,7 +43,7 @@ const LoginPage: React.FC<Props> = () => {
             <InputComponent placeholder={'E-mail'} name={"email"} value={values.email} onChange={handleChange} />
             <PasswordComponent placeholder={"Пароль"} value={values.password} onChange={handleChange} />
             <div className={styles.login_block_btn}>
-              <Button htmlType="submit" type="primary" size="large" disabled={!values.email || !values.password}>
+              <Button htmlType="submit" type="primary" size="large" disabled={!values.email || !values.password} data-cy={"login"}>
                 Войти
               </Button>
             </div>

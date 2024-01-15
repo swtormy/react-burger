@@ -37,7 +37,7 @@ const Modal: React.FC<Props> = ({ children, onClose, headerText }) => {
             <p className="text text_type_main-large">
               {headerText}
             </p>
-            <button onClick={onClose} className={styles.closeBtn}><CloseIcon type="primary" /></button>
+            <button onClick={onClose} className={styles.closeBtn} data-cy={'close-modal-window'}><CloseIcon type="primary" /></button>
           </div>
           {children}
         </div>

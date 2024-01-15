@@ -37,7 +37,7 @@ const Burger:React.FC<Props> = ({}) => {
 
 
     return (
-        <div ref={refDrop} className={styles.burger}>
+        <div ref={refDrop} className={styles.burger} data-cy="drop-target"> 
             {bun && <div className={styles.burger_row_block} key={`constructor_${uuidv4()}`}>
                 <ConstructorElement
                     type="top"

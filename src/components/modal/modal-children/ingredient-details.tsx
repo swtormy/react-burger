@@ -31,7 +31,7 @@ const IngredientDetails: React.FC<Props> = ({}) => {
             <p className="text text_type_main-default">
               Калории, ккал
             </p>
-            <p className="text text_type_digits-default">
+            <p className="text text_type_digits-default" data-cy={"calories"}>
               {currentIngredient?.calories}
             </p>
           </div>

@@ -13,6 +13,7 @@
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
+    "dotenv": "^16.3.1",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
@@ -34,7 +35,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "deploy-script": "npm run build && scp -r ./build/* swtormy@158.160.15.116:/home/praktikum/stellar-frontend"
+    "deploy-script": "npm run build && scp -r ./build/* swtormy@158.160.15.116:/home/praktikum/stellar-frontend",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [

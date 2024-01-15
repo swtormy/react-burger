@@ -32,6 +32,7 @@ const InputComponent: React.FC<Props> = ({ placeholder, name, value, icon, onCha
             errorText={'Ошибка'}
             size={'default'}
             extraClass="ml-1"
+            data-cy={"login-input"}
         />
     )
 }
