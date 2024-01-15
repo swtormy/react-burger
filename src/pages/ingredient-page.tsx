@@ -21,7 +21,9 @@ const IngredientPage: React.FC<Props> = ({ modal }) => {
     if (!modal) {
       const ingList = ingredientsList as TIngredientExtended[]
       const foundIngredient = ingList.find((item) => item._id === id);
-      dispatch(addCurrentIngredient(foundIngredient));
+      if(foundIngredient){
+        dispatch(addCurrentIngredient(foundIngredient));
+      }
     }
   }, [id, dispatch, ingredientsList, modal]);
 

@@ -1,6 +1,9 @@
 import { logIn, refresh, register, logOut } from '../../utils/burger-api';
 import Cookies from 'js-cookie';
 import { checkTokenExpiry } from '../../utils/utils-funcs';
+import { AllowResetPasswordAccessAction, AuthActionTypes, RefreshTokenSuccessAction, RegisterSuccessAction, SaveRedirectPathAction, TUserProfileData, User } from '../../utils/models';
+import { ThunkAction } from 'redux-thunk';
+import { AppDispatch, RootState } from '../store';
 
 export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN/SUCCESS';
 export const REFRESH_TOKEN_FAIL = 'REFRESH_TOKEN/FAIL';
@@ -19,20 +22,20 @@ export const RESET_PASSWORD_ACCESS = 'RESET_PASSWORD/ACCESS';
 export const SAVE_REDIRECT_PATH = 'SAVE_REDIRECT/PATH';
 
 
-export const saveRedirectPath = (path) => {
+export const saveRedirectPath = (path: string): SaveRedirectPathAction => {
     return {
         type: SAVE_REDIRECT_PATH,
         payload: path
     };
 };
 
-export const allowResetPasswordAccess = () => {
+export const allowResetPasswordAccess = (): AllowResetPasswordAccessAction => {
     return {
         type: RESET_PASSWORD_ACCESS
     };
 };
 
-export const loginUser = (userData) => {
+export const loginUser = (userData: TUserProfileData): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
     return (dispatch) => {
         return logIn(userData).then(response => {
             dispatch({
@@ -49,7 +52,7 @@ export const loginUser = (userData) => {
     };
 };
 
-export const refreshToken = (refreshToken) => {
+export const refreshToken = (refreshToken: string): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
     return (dispatch) => {
         return refresh(refreshToken).then(response => {
             if (response.success) {
@@ -69,7 +72,7 @@ export const refreshToken = (refreshToken) => {
     };
 };
 
-export const registerUser = (userData) => {
+export const registerUser = (userData: TUserProfileData): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
     return (dispatch) => {
         return register(userData).then(response => {
             if (response.success) {
@@ -94,7 +97,7 @@ export const registerUser = (userData) => {
     };
 };
 
-export const logoutUser = (refreshToken) => {
+export const logoutUser = (refreshToken : string): ThunkAction<void, RootState, unknown, AuthActionTypes> => {
     return (dispatch) => {
         return logOut(refreshToken).then(response => {
             if (response.success) {
@@ -108,10 +111,10 @@ export const logoutUser = (refreshToken) => {
     };
 };
 
-export const checkAuthentication = () => (dispatch) => {
-    const accessToken = Cookies.get('accessToken');
-    const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
-    const refToken = Cookies.get('refreshToken');
+export const checkAuthentication = ():ThunkAction<void, RootState, unknown, AuthActionTypes> => (dispatch) => {
+    const accessToken = Cookies.get('accessToken') || "";
+    const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null;
+    const refToken = Cookies.get('refreshToken') || "";
     if (accessToken && checkTokenExpiry(accessToken)) {
         dispatch({
             type: LOGIN_SUCCESS,
@@ -121,8 +124,8 @@ export const checkAuthentication = () => (dispatch) => {
                 refreshToken: refToken
             }
         });
-    } else if (accessToken) {
-        dispatch(refreshToken());
+    } else if (accessToken && refToken) {
+        dispatch(refreshToken(refToken));
     } else {
         dispatch({ type: LOGOUT_SUCCESS });
     }
