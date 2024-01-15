@@ -100,7 +100,7 @@ const OrderDetailComponent:React.FC<Props> = ({}) => {
                     />}
                 </p>
                 <div className={styles.price}>
-                    <p className="text text_type_digits-default">{needIngs && calculateOrderSum(needIngs)}</p>
+                    <p className="text text_type_digits-default">{needIngs && calculateOrderSum(orders.find(el => el.number===parseInt(order_number!)), needIngs)}</p>
                     <CurrencyIcon type="primary" />
                 </div>
             </div>

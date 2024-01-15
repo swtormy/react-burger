@@ -8,7 +8,7 @@ import {
 } from '../actions/constructor'
 
 
-const initialState: ConstructorState = {
+export const initialState: ConstructorState = {
     constructorIngredients: []
 };
 

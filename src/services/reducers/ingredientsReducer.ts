@@ -7,7 +7,7 @@ import {
     REMOVE_CURRENT_INGREDIENT
 } from '../actions/ingredients';
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
     ingredientsList: [],
     currentIngredient: localStorage.getItem("currentIngredient") ? JSON.parse(localStorage.getItem("currentIngredient")!) : null,
     isLoading: false,

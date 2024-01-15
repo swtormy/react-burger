@@ -3,7 +3,7 @@ import { SAVE_REDIRECT_PATH, LOGIN_SUCCESS, RESET_PASSWORD_ACCESS, REFRESH_TOKEN
 import { AuthActionTypes, UserStoreState } from '../../utils/models';
 
 
-const initialState: UserStoreState = {
+export const initialState: UserStoreState = {
     user_info: Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null,
     token: Cookies.get('accessToken') ? Cookies.get('accessToken')! : null,
     resetPasswordAccess: false,

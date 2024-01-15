@@ -6,7 +6,7 @@ import {
     REMOVE_CURRENT_ORDER,
 } from '../actions/order';
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
     order: null,
     isLoading: false,
     error: null,
@@ -36,16 +36,7 @@ export default function orderReducer(state = initialState, action: OrderActionTy
                 ...state,
                 order: null,
             };
-        // case UPDATE_ORDER_LIST:
-        //     return {
-        //         ...state,
-        //         orderList: action.payload,
-        //     };
-        // case UPDATE_OWN_ORDER_LIST:
-        //     return {
-        //         ...state,
-        //         ownOrderList: action.payload,
-        //     };
+        
         default:
             return state;
     }
