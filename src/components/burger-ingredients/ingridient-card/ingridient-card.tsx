@@ -20,7 +20,7 @@ const IngridientCard: React.FC<Props> = ({ item, onOpen }) => {
 
     const count = useMemo(() => countObjectsWithId(constructorIngredients, item._id), [constructorIngredients, item._id])
     return (
-        <div ref={ref} className={styles.card} onClick={onOpen}>
+        <div ref={ref} className={styles.card} onClick={onOpen} data-cy={`ingridient-card-${item._id}`} >
             <div className={styles.image}>
                 <img src={item.image} alt={getFileNameFromUrl(item.image)} />
                 {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}

@@ -12,12 +12,19 @@ type Props = {
     type: "all" | "own";
 }
 
-export const calculateOrderSum = (orderIngs: TIngredientExtended[]) => {
+export const calculateOrderSum = (order: Order | undefined, orderIngs: TIngredientExtended[]) => {
     const bun = orderIngs.find(el => el.type === "bun")
     const other = orderIngs.filter(el => el.type !== "bun")
-    const totalPrice = other.reduce((total, item) => total + item.price, 0);
+    
+    const totalPrice = order?.ingredients.reduce((tot, it) =>  {
+        const price = other.find(el => el._id === it)?.price
+        if(price){
+            return tot + price
+        }
+        return tot + 0
+    }, 0);
     if (bun) {
-        return totalPrice + (bun.price * 2)
+        return (totalPrice ?? 0) + (bun.price * 2)
     }
     return totalPrice
 }
@@ -83,7 +90,7 @@ const OrderComponent: React.FC<Props> = ({ order, location, type }) => {
                 </div>
                 <div className={styles.price}>
                     <p className="text text_type_main-medium">
-                        {calculateOrderSum(orderIng)}
+                        {calculateOrderSum(order, orderIng)}
                     </p>
                     <CurrencyIcon type="primary" />
                 </div>

@@ -22,6 +22,7 @@ const PasswordComponent: React.FC<Props> = ({ value, onChange, placeholder, icon
             placeholder={placeholder}
             extraClass="mb-2"
             icon={getValidIcon(icon)}
+            data-cy={"password-input"}
         />
     )
 }
